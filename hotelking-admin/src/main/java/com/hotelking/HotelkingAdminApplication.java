@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HotelkingApplication {
+public class HotelkingAdminApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(HotelkingApplication.class, args);
+    SpringApplication.run(HotelkingAdminApplication.class, args);
   }
-
 }
