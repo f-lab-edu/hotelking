@@ -9,6 +9,7 @@ public enum ErrorCode {
   HOTEL_ADMIN_02("HOTEL_ADMIN_02", "경도는 124 ~ 132 사이어야합니다."),
   HOTEL_ADMIN_03("HOTEL_ADMIN_03", "호텔이름(hotelName) 는 필수입니다."),
   HOTEL_ADMIN_04("HOTEL_ADMIN_04", "호텔주소(hotelAddress) 는 필수입니다."),
+  NOT_READABLE("NOT_READABLE", "잘못된 요청값입니다."),
 
   NOT_DEFINED("NOT_DEFINED", "");
 
