@@ -29,11 +29,11 @@ public class Coordinate {
 
   private void validateCoordinate(double lat, double lng) {
     if (MIN_LAT > lat || MAX_LAT < lat) {
-      throw new IllegalArgumentException("위도는 33 ~ 43 사이어야합니다.");
+      throw new IllegalArgumentException("HOTEL_ADMIN_01");
     }
 
     if(MIN_LNG > lng || MAX_LNG < lng) {
-      throw new IllegalArgumentException("경도는 124 ~ 132 사이어야합니다.");
+      throw new IllegalArgumentException("HOTEL_ADMIN_02");
     }
   }
 }

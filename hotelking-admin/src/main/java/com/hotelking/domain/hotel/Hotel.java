@@ -37,11 +37,11 @@ public class Hotel extends BaseTimeEntity {
     this.id = id;
 
     if (name == null || name.isBlank()) {
-      throw new IllegalArgumentException("hotel name is not null or blank");
+      throw new IllegalArgumentException("HOTEL_ADMIN_03");
     }
 
     if (address == null || address.isBlank()){
-      throw new IllegalArgumentException("hotel address is not null or blank");
+      throw new IllegalArgumentException("HOTEL_ADMIN_04");
     }
 
     this.name = name;
