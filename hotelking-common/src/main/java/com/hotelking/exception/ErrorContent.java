@@ -10,7 +10,7 @@ public record ErrorContent(
 ) {
 
   public static ErrorContent from(ErrorCode errorCode) {
-    return new ErrorContent(errorCode.name(), errorCode.getExternalErrorMessage());
+    return new ErrorContent(errorCode.getCode(), errorCode.getExternalErrorMessage());
   }
 
 }
