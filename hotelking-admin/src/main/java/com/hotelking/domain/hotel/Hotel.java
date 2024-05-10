@@ -2,6 +2,8 @@ package com.hotelking.domain.hotel;
 
 import com.hotelking.domain.BaseTimeEntity;
 import com.hotelking.domain.hotel.vo.Coordinate;
+import com.hotelking.exception.ErrorCode;
+import com.hotelking.exception.HotelkingException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -13,7 +15,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Entity @Getter
 @Table(name = "HOTEL")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -37,11 +41,11 @@ public class Hotel extends BaseTimeEntity {
     this.id = id;
 
     if (name == null || name.isBlank()) {
-      throw new IllegalArgumentException("HOTEL_ADMIN_03");
+      throw new HotelkingException(ErrorCode.REQ_HOTEL_NAME, log);
     }
 
     if (address == null || address.isBlank()){
-      throw new IllegalArgumentException("HOTEL_ADMIN_04");
+      throw new HotelkingException(ErrorCode.REQ_HOTEL_ADDR, log);
     }
 
     this.name = name;

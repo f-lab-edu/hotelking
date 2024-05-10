@@ -1,22 +1,33 @@
 package com.hotelking.dto.request;
 
 import com.hotelking.dto.AddHotelDto;
-import jakarta.validation.constraints.NotBlank;
+import com.hotelking.dto.Checkable;
+import com.hotelking.exception.ErrorCode;
+import com.hotelking.exception.HotelkingException;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
-public class AddHotelRequest {
+@Slf4j
+public class AddHotelRequest implements Checkable {
 
-  @NotBlank(message = "HOTEL_ADMIN_03")
   private String hotelName;
-
-  @NotBlank(message = "HOTEL_ADMIN_04")
   private String hotelAddress;
-
   private double hotelLat;
   private double hotelLng;
 
   public AddHotelDto toAddHotel() {
     return new AddHotelDto(hotelName, hotelAddress, hotelLat, hotelLng);
+  }
+
+  @Override
+  public void validationCheck() {
+    if (hotelName == null || hotelName.isBlank()) {
+      throw new HotelkingException(ErrorCode.REQ_HOTEL_NAME, log);
+    }
+
+    if (hotelAddress == null || hotelAddress.isBlank()) {
+      throw new HotelkingException(ErrorCode.REQ_HOTEL_ADDR, log);
+    }
   }
 }
