@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.hotelking.domain.hotel.Hotel;
+import com.hotelking.exception.HotelkingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -39,6 +40,6 @@ class HotelTest {
         .lat(37.12321)
         .lng(127.123213)
         .build())
-        .isInstanceOf(IllegalArgumentException.class);
+        .isInstanceOf(HotelkingException.class);
   }
 }
