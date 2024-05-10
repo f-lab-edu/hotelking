@@ -1,16 +1,15 @@
 package com.hotelking.controller;
 
-import com.hotelking.domain.hotel.Hotel;
 import com.hotelking.dto.request.AddHotelRequest;
+import com.hotelking.response.ApiResponse;
 import com.hotelking.service.AddHotelService;
-import jakarta.validation.Valid;
-import java.net.URI;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class HotelManagementController {
 
   private final AddHotelService addHotelService;
@@ -19,9 +18,10 @@ public class HotelManagementController {
     this.addHotelService = addHotelService;
   }
 
-  @PostMapping("/hotels")
-  public ResponseEntity<?> registerHotel(@RequestBody @Valid AddHotelRequest addHotelRequest) {
-    long hotelId = addHotelService.registerHotel(addHotelRequest.toAddHotel());
-    return ResponseEntity.created(URI.create("/hotels/" + hotelId)).build();
+  @PostMapping("/admin/hotels")
+  public ApiResponse<?> registerHotel(@RequestBody AddHotelRequest addHotelRequest) {
+    addHotelRequest.validationCheck();
+    addHotelService.registerHotel(addHotelRequest.toAddHotel());
+    return ApiResponse.success();
   }
 }
