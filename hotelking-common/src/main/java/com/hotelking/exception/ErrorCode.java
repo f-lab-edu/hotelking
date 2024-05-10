@@ -1,6 +1,5 @@
 package com.hotelking.exception;
 
-import java.util.Arrays;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -24,11 +23,5 @@ public enum ErrorCode {
     this.externalErrorMessage = externalErrorMessage;
     this.internalErrorMsg = internalErrorMsg;
     this.httpStatus = httpStatus;
-  }
-
-  public static ErrorCode findCode(String code) {
-    return Arrays.stream(ErrorCode.values()).filter(it -> it.getCode().equals(code))
-        .findFirst()
-        .orElse(NOT_DEFINED);
   }
 }

@@ -7,32 +7,17 @@ import com.hotelking.exception.ErrorContent;
 @JsonInclude(value = Include.NON_NULL)
 public record ApiResponse<T>(String result, T data, ErrorContent error) {
 
-  /**
-   *
-   * ex)
-   * {
-   *       "result" : "success",
-   *       "data": {
-   *         "hotelId": 1L
-   *       }
-   *     }
-   */
+  // {"result" : "success", data : { "hello": "world" }}
   public static <T> ApiResponse<T> success(T data) {
     return new ApiResponse<>("success", data, null);
   }
 
+  // {"result" : "success"}
+  public static <T> ApiResponse<T> success() {
+    return new ApiResponse<>("success", null, null);
+  }
 
-  /**
-   *
-   * ex)
-   * {
-   *       "result" : "error",
-   *       "error" : {
-   *         "code" : "A001",
-   *         "message": "호텔 이름은 필수입니다."
-   *       }
-   *     }
-   */
+  // {"result" : "error", "error" : { "code": "A001", "message": "invalid format"}}
   public static <T> ApiResponse<T> error(ErrorContent error) {
     return new ApiResponse<>("error", null, error);
   }
