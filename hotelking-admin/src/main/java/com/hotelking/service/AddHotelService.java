@@ -1,7 +1,6 @@
 package com.hotelking.service;
 
 import com.hotelking.domain.HotelRepository;
-import com.hotelking.domain.hotel.Hotel;
 import com.hotelking.dto.AddHotelDto;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +13,7 @@ public class AddHotelService {
     this.hotelRepository = hotelRepository;
   }
 
-  public long registerHotel(final AddHotelDto addHotel) {
-    Hotel hotel = hotelRepository.save(addHotel.toEntity());
-    return hotel.getId();
+  public void registerHotel(final AddHotelDto addHotel) {
+    hotelRepository.save(addHotel.toEntity());
   }
 }
