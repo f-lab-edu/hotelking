@@ -1,12 +1,15 @@
 group = 'com'
 version = '0.0.1-SNAPSHOT'
 
+bootJar.enabled = false
+jar.enabled = true
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation project(':hotelking-common')
+
 }
 
 tasks.named('test') {
