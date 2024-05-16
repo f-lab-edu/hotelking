@@ -1,9 +1,12 @@
 package com.hotelking.domain.schedule;
 
 import com.hotelking.domain.BaseTimeEntity;
+import com.hotelking.domain.hotel.Hotel;
 import com.hotelking.domain.hotel.RoomType;
+import com.hotelking.domain.room.Room;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +28,7 @@ public class RoomSchedule extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(
       name = "room_type_id",
       foreignKey = @ForeignKey(name = "fk_room_schedule_to_room_type"),
@@ -34,11 +37,24 @@ public class RoomSchedule extends BaseTimeEntity {
   )
   private RoomType roomType;
 
-  @Column(name = "room_id", columnDefinition = "BIGINT", nullable = false)
-  private Long roomId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(
+                              columnDefinition = "BIGINT",
+      nullable = false,
+      updatable = false,
+      foreignKey = @ForeignKey(name = "fk_room_schedule_to_room")
+  )
+  private Room room;
 
-  @Column(name = "hotel_id", columnDefinition = "BIGINT", nullable = false)
-  private Long hotelId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(
+      name = "hotel_id",
+      columnDefinition = "BIGINT",
+      nullable = false,
+      updatable = false,
+      foreignKey = @ForeignKey(name = "fk_room_schedule_to_hotel")
+  )
+  private Hotel hotel;
 
   @Column(name = "check_in", columnDefinition = "TIMESTAMP(0)", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
