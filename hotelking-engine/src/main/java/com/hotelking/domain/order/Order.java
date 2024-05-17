@@ -19,6 +19,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -59,5 +60,27 @@ public class Order extends BaseTimeEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "state", columnDefinition = "CHAR(10)", nullable = false)
-  private OrderState state = OrderState.PENDING;
+  private OrderState state;
+
+  @Builder
+  public Order(
+      final Long id,
+      final long hotelId,
+      final ReservationType reservationType,
+      final LocalDateTime checkIn,
+      final LocalDateTime checkOut,
+      final long userId,
+      final RoomType roomType
+  ) {
+    if (id != null) {
+      this.id = id;
+    }
+    this.hotelId = hotelId;
+    this.reservationType = reservationType;
+    this.checkIn = checkIn;
+    this.checkOut = checkOut;
+    this.userId = userId;
+    this.roomType = roomType;
+    this.state = OrderState.PENDING;
+  }
 }
