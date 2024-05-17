@@ -1,6 +1,7 @@
 package com.hotelking.domain.schedule;
 
 import com.hotelking.domain.BaseTimeEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
@@ -35,4 +36,6 @@ public class RoomScheduleTimeSlot extends BaseTimeEntity {
   )
   private TimeSlot timeSlot;
 
+  @Column(name = "is_reserved", columnDefinition = "TINYINT", nullable = false)
+  private boolean isReserved;
 }

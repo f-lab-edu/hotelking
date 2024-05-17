@@ -25,7 +25,7 @@ public class TimeSlot extends BaseTimeEntity {
   @Temporal(TemporalType.TIME)
   private LocalTime time;
 
-  @Column(name = "slot_name ", nullable = false)
+  @Column(name = "slot_name", nullable = false)
   @Enumerated(value = EnumType.STRING)
   private TimeSlotName timeSlotName;
 }

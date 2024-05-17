@@ -1,4 +1,4 @@
-package com.hotelking.order;
+package com.hotelking.domain.order;
 
 import com.hotelking.domain.BaseTimeEntity;
 import com.hotelking.domain.hotel.RoomType;
@@ -56,4 +56,8 @@ public class Order extends BaseTimeEntity {
       updatable = false
   )
   private RoomType roomType;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "state", columnDefinition = "CHAR(10)", nullable = false)
+  private OrderState state = OrderState.PENDING;
 }

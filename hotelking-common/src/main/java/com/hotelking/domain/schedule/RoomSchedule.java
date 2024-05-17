@@ -2,10 +2,11 @@ package com.hotelking.domain.schedule;
 
 import com.hotelking.domain.BaseTimeEntity;
 import com.hotelking.domain.hotel.Hotel;
-import com.hotelking.domain.hotel.RoomType;
 import com.hotelking.domain.room.Room;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
@@ -30,15 +31,6 @@ public class RoomSchedule extends BaseTimeEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(
-      name = "room_type_id",
-      foreignKey = @ForeignKey(name = "fk_room_schedule_to_room_type"),
-      nullable = false,
-      updatable = false
-  )
-  private RoomType roomType;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(
                               columnDefinition = "BIGINT",
       nullable = false,
       updatable = false,
@@ -60,10 +52,15 @@ public class RoomSchedule extends BaseTimeEntity {
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime checkIn;
 
-  @Column(name = "check_out", columnDefinition = "TIMESTAMP(0)", nullable = false)
-  @Temporal(TemporalType.TIMESTAMP)
-  private LocalDateTime checkOut;
-
-  @OneToMany(mappedBy = "roomSchedule")
+  @OneToMany(mappedBy = "roomSchedule", fetch = FetchType.EAGER)
   private List<RoomScheduleTimeSlot> roomScheduleTimeSlots;
+
+  //   RoomScheduleTimeSlot 에서 하나라도 예약이 되있는 경우에 isReserved = True
+  //   매번 List<RoomScheduleTimeSlot> -> any isReserved = true ? -> true
+  @Column(name = "is_reserved", columnDefinition = "TINYINT", nullable = false)
+  private boolean isReserved;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "reservation_status", columnDefinition = "CHAR(10)", nullable = false)
+  private ReservationType reservationType;
 }
