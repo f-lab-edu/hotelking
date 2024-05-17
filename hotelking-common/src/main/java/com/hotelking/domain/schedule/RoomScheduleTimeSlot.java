@@ -36,6 +36,6 @@ public class RoomScheduleTimeSlot extends BaseTimeEntity {
   )
   private TimeSlot timeSlot;
 
-  @Column(name = "is_reserved", columnDefinition = "TINYINT", nullable = false)
+  @Column(name = "is_reserved", nullable = false)
   private boolean isReserved;
 }

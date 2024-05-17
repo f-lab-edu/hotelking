@@ -57,7 +57,7 @@ public class RoomSchedule extends BaseTimeEntity {
 
   //   RoomScheduleTimeSlot 에서 하나라도 예약이 되있는 경우에 isReserved = True
   //   매번 List<RoomScheduleTimeSlot> -> any isReserved = true ? -> true
-  @Column(name = "is_reserved", columnDefinition = "TINYINT", nullable = false)
+  @Column(name = "is_reserved", nullable = false)
   private boolean isReserved;
 
   @Enumerated(EnumType.STRING)
