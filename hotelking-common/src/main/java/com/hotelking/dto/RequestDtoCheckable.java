@@ -1,6 +1,6 @@
 package com.hotelking.dto;
 
-public interface Checkable {
+public interface RequestDtoCheckable {
 
   void validationCheck();
 }
