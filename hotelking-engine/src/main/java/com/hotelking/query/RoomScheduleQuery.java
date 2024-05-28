@@ -14,11 +14,11 @@ public interface RoomScheduleQuery extends JpaRepository<RoomSchedule, Long> {
       "JOIN r.type rt " +
       "WHERE rs.hotel.id = :hotelId " +
       "AND rt.id = :roomTypeId " +
-      "AND rs.reservationType = 'STAY' " +
       "AND rs.room.id IN (" +
       "    SELECT rs2.room.id " +
       "    FROM RoomSchedule rs2 " +
       "    WHERE rs2.hotel.id = :hotelId " +
+      "    AND rs.reservationType = ReservationType.STAY" +
       "    AND rs2.isReserved = false " +
       "    AND (rs2.checkIn >= :startDate AND rs2.checkIn < :endDate) " +
       "    GROUP BY rs2.room.id " +
