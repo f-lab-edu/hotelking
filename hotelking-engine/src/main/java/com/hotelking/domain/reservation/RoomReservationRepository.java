@@ -1,13 +1,13 @@
-package com.hotelking.domain.order;
+package com.hotelking.domain.reservation;
 
 import com.hotelking.domain.schedule.ReservationType;
 import java.time.LocalDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface OrderRepository extends JpaRepository<Order, Long> {
+public interface RoomReservationRepository extends JpaRepository<RoomReservation, Long> {
 
-  @Query(value = "select count(o) from Order o "
+  @Query(value = "select count(o) from RoomReservation o "
       + "where o.hotelId = :hotelId "
       + "and o.roomType.id = :roomTypeId "
       + "and o.checkIn >= :checkIn "

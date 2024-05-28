@@ -1,4 +1,4 @@
-package com.hotelking.domain.order;
+package com.hotelking.domain.reservation;
 
 import com.hotelking.domain.BaseTimeEntity;
 import com.hotelking.domain.hotel.RoomType;
@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "ROOM_ORDER")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order extends BaseTimeEntity {
+public class RoomReservation extends BaseTimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,10 +60,10 @@ public class Order extends BaseTimeEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "state", columnDefinition = "CHAR(10)", nullable = false)
-  private OrderState state;
+  private RoomReservationState state;
 
   @Builder
-  public Order(
+  public RoomReservation(
       final Long id,
       final long hotelId,
       final ReservationType reservationType,
@@ -81,6 +81,6 @@ public class Order extends BaseTimeEntity {
     this.checkOut = checkOut;
     this.userId = userId;
     this.roomType = roomType;
-    this.state = OrderState.PENDING;
+    this.state = RoomReservationState.PENDING;
   }
 }
