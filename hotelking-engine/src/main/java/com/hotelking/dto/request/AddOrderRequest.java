@@ -5,7 +5,6 @@ import com.hotelking.dto.AddOrderDto;
 import com.hotelking.dto.RequestDtoCheckable;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,19 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddOrderRequest implements RequestDtoCheckable {
 
-  @NotNull
   private Long hotelId;
-
-  @NotNull
   private Long roomTypeId;
-
-  @NotNull
   private LocalDateTime checkIn;
-
-  @NotNull
   private LocalDateTime checkOut;
-
-  @NotNull
   private ReservationType reservationType;
 
   @Override
