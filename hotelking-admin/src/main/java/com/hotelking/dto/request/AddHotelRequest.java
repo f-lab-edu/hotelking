@@ -1,7 +1,7 @@
 package com.hotelking.dto.request;
 
 import com.hotelking.dto.AddHotelDto;
-import com.hotelking.dto.Checkable;
+import com.hotelking.dto.RequestDtoCheckable;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Slf4j
-public class AddHotelRequest implements Checkable {
+public class AddHotelRequest implements RequestDtoCheckable {
 
   private String hotelName;
   private String hotelAddress;

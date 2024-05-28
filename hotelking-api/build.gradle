@@ -5,6 +5,11 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    implementation project(':hotelking-engine')
+    implementation project(':hotelking-common')
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }
