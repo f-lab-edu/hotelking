@@ -6,7 +6,7 @@ import com.hotelking.domain.schedule.ReservationType;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-public record AddOrderDto(
+public record AddRoomReservationDto(
     long hotelId,
     long roomTypeId,
     LocalDateTime checkIn,
@@ -27,5 +27,13 @@ public record AddOrderDto(
         .userId(user.userId())
         .reservationType(reservationType)
         .build();
+  }
+
+  public LocalDateTime getStartOfDayOfCheckIn() {
+    return this.checkIn.toLocalDate().atStartOfDay();
+  }
+
+  public LocalDateTime getLastOfDayOfCheckOut() {
+    return this.checkOut.toLocalDate().atStartOfDay().plusDays(1L);
   }
 }

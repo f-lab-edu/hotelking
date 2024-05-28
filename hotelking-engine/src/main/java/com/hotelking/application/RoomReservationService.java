@@ -5,7 +5,7 @@ import com.hotelking.domain.reservation.RoomReservation;
 import com.hotelking.domain.reservation.RoomReservationRepository;
 import com.hotelking.domain.schedule.ReservationType;
 import com.hotelking.dto.ActiveUser;
-import com.hotelking.dto.AddOrderDto;
+import com.hotelking.dto.AddRoomReservationDto;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
 import com.hotelking.query.RoomScheduleQuery;
@@ -16,13 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
-public class OrderService {
+public class RoomReservationService {
 
   private final RoomReservationRepository roomReservationRepository;
   private final RoomScheduleQuery roomScheduleQuery;
   private final RoomTypeQuery roomTypeQuery;
 
-  public OrderService(RoomReservationRepository roomReservationRepository, RoomScheduleQuery roomScheduleQuery,
+  public RoomReservationService(RoomReservationRepository roomReservationRepository, RoomScheduleQuery roomScheduleQuery,
       RoomTypeQuery roomTypeQuery) {
     this.roomReservationRepository = roomReservationRepository;
     this.roomScheduleQuery = roomScheduleQuery;
@@ -30,21 +30,21 @@ public class OrderService {
   }
 
   @Transactional
-  public void addOrder(ActiveUser activeUser, AddOrderDto addOrderDto) {
-    checkRoomRevAvailability(addOrderDto);
-    final RoomType roomType = findRoomType(addOrderDto);
-    RoomReservation roomReservation = addOrderDto.toRoomRevWithType(activeUser, roomType);
+  public void addOrder(ActiveUser activeUser, AddRoomReservationDto addRoomReservationDto) {
+    checkRoomRevAvailability(addRoomReservationDto);
+    final RoomType roomType = findRoomType(addRoomReservationDto);
+    RoomReservation roomReservation = addRoomReservationDto.toRoomRevWithType(activeUser, roomType);
     roomReservationRepository.save(roomReservation);
   }
 
-  private RoomType findRoomType(AddOrderDto addOrderDto) {
-    return roomTypeQuery.findById(addOrderDto.roomTypeId())
+  private RoomType findRoomType(AddRoomReservationDto addRoomReservationDto) {
+    return roomTypeQuery.findById(addRoomReservationDto.roomTypeId())
         .orElseThrow(() -> new HotelkingException(ErrorCode.NOT_FOUND_ROOM_TYPE, log));
   }
 
-  public void checkRoomRevAvailability(AddOrderDto addOrderDto) {
-    long emptyRoomScheduleCnt = countEmptyRoomSchedule(addOrderDto);
-    long orderedRoomCnt = countOrdered(addOrderDto);
+  public void checkRoomRevAvailability(AddRoomReservationDto addRoomReservationDto) {
+    long emptyRoomScheduleCnt = countEmptyRoomSchedule(addRoomReservationDto);
+    long orderedRoomCnt = countOrdered(addRoomReservationDto);
     checkAndThrowIfRoomOrderFull(emptyRoomScheduleCnt, orderedRoomCnt);
   }
 
@@ -54,18 +54,18 @@ public class OrderService {
     }
   }
 
-  private long countOrdered(AddOrderDto addOrderDto) {
+  private long countOrdered(AddRoomReservationDto addRoomReservationDto) {
     return roomReservationRepository.countOccupiedRoomOrderWithType(
-        addOrderDto.hotelId(),
-        addOrderDto.roomTypeId(),
-        addOrderDto.checkIn().toLocalDate().atStartOfDay(),
-        addOrderDto.checkOut().toLocalDate().atStartOfDay().plusDays(1L),
-        addOrderDto.reservationType()
+        addRoomReservationDto.hotelId(),
+        addRoomReservationDto.roomTypeId(),
+        addRoomReservationDto.getStartOfDayOfCheckIn(),
+        addRoomReservationDto.getLastOfDayOfCheckOut(),
+        addRoomReservationDto.reservationType()
     );
   }
 
-  private long countEmptyRoomSchedule(AddOrderDto addOrderDto) {
-    long emptyScheduleRoomsCount = getEmptyScheduleRoomsCount(addOrderDto);
+  private long countEmptyRoomSchedule(AddRoomReservationDto addRoomReservationDto) {
+    long emptyScheduleRoomsCount = getEmptyScheduleRoomsCount(addRoomReservationDto);
 
     if (isScheduleFull(emptyScheduleRoomsCount)) {
       throw new HotelkingException(ErrorCode.ROOM_SCHEDULE_FULL, log);
@@ -74,33 +74,33 @@ public class OrderService {
     return emptyScheduleRoomsCount;
   }
 
-  private long getEmptyScheduleRoomsCount(AddOrderDto addOrderDto) {
-    if (isDaeSilReservation(addOrderDto)) {
-      return countEmptyDaeSilScheduleRooms(addOrderDto);
+  private long getEmptyScheduleRoomsCount(AddRoomReservationDto addRoomReservationDto) {
+    if (isDaeSilReservation(addRoomReservationDto)) {
+      return countEmptyDaeSilScheduleRooms(addRoomReservationDto);
     } else {
-      return countEmptyStayScheduleRooms(addOrderDto);
+      return countEmptyStayScheduleRooms(addRoomReservationDto);
     }
   }
 
-  private boolean isDaeSilReservation(AddOrderDto addOrderDto) {
-    return addOrderDto.reservationType() == ReservationType.DAESIL;
+  private boolean isDaeSilReservation(AddRoomReservationDto addRoomReservationDto) {
+    return addRoomReservationDto.reservationType() == ReservationType.DAESIL;
   }
 
-  private long countEmptyDaeSilScheduleRooms(AddOrderDto addOrderDto) {
+  private long countEmptyDaeSilScheduleRooms(AddRoomReservationDto addRoomReservationDto) {
     return roomScheduleQuery.countEmptyDasilSchduleRooms(
-        addOrderDto.hotelId(),
-        addOrderDto.roomTypeId(),
-        addOrderDto.checkIn().toLocalDate().atStartOfDay()
+        addRoomReservationDto.hotelId(),
+        addRoomReservationDto.roomTypeId(),
+        addRoomReservationDto.checkIn().toLocalDate().atStartOfDay()
     );
   }
 
-  private long countEmptyStayScheduleRooms(AddOrderDto addOrderDto) {
+  private long countEmptyStayScheduleRooms(AddRoomReservationDto addRoomReservationDto) {
     return roomScheduleQuery.countEmptyStayScheduleRooms(
-        addOrderDto.hotelId(),
-        addOrderDto.roomTypeId(),
-        addOrderDto.checkIn(),
-        addOrderDto.checkOut(),
-        addOrderDto.getDayDiffer()
+        addRoomReservationDto.hotelId(),
+        addRoomReservationDto.roomTypeId(),
+        addRoomReservationDto.checkIn(),
+        addRoomReservationDto.checkOut(),
+        addRoomReservationDto.getDayDiffer()
     );
   }
 

@@ -1,7 +1,7 @@
 package com.hotelking.dto.request;
 
 import com.hotelking.domain.schedule.ReservationType;
-import com.hotelking.dto.AddOrderDto;
+import com.hotelking.dto.AddRoomReservationDto;
 import com.hotelking.dto.RequestDtoCheckable;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
@@ -50,7 +50,7 @@ public class AddOrderRequest implements RequestDtoCheckable {
     return checkIn.toLocalDate().isEqual(checkOut.toLocalDate());
   }
 
-  public AddOrderDto toOrderDto() {
-    return new AddOrderDto(hotelId, roomTypeId, checkIn, checkOut, reservationType);
+  public AddRoomReservationDto toOrderDto() {
+    return new AddRoomReservationDto(hotelId, roomTypeId, checkIn, checkOut, reservationType);
   }
 }
