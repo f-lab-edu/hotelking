@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserStatus {
 
-  @Column(name = "user_withdraw", nullable = false)
-  private boolean isWithdraw;
+  @Column(name = "user_withdrawal", nullable = false)
+  private boolean isWithdrawal;
 
   @Column(name = "deleted_at", columnDefinition = "TIMESTAMP(0)", nullable = false)
   @Temporal(value = TemporalType.TIMESTAMP)
   private LocalDateTime deletedAt;
 
   private boolean isNotDeleted() {
-    return !isWithdraw;
+    return !isWithdrawal;
   }
 }
