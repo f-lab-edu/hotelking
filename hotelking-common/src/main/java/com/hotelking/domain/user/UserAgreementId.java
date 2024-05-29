@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Embeddable
@@ -21,6 +22,12 @@ public class UserAgreementId implements Serializable {
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = "user_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_user_useragmt"))
   private User user;
+
+  @Builder
+  public UserAgreementId(Agreement agreement, User user) {
+    this.agreement = agreement;
+    this.user = user;
+  }
 
   @Override
   public boolean equals(Object o) {
