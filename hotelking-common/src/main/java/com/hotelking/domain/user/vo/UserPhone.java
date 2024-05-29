@@ -21,4 +21,8 @@ public class UserPhone {
     }
     this.phoneNumber = phoneNumber;
   }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
 }
