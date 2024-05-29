@@ -34,7 +34,8 @@ public enum ErrorCode {
 
   // User
   USER_INVALID_PARAM_ID("U001", "유저의 입력정보가 부정확합니다.", "userId 는 필수입니다.", HttpStatus.BAD_REQUEST),
-  USER_INVALID_PARAM_PWD("U002", "유저의 입력정보가 부정확합니다.", "password 는 필수입니다.", HttpStatus.BAD_REQUEST);
+  USER_INVALID_PARAM_PWD("U002", "유저의 입력정보가 부정확합니다.", "password 는 필수입니다.", HttpStatus.BAD_REQUEST),
+  USER_INVALID_PARAM_PHONE("U003", "잘못된 휴대폰 번호 양식입니다.", "phoneNumber 는 필수입니다.", HttpStatus.BAD_REQUEST);
 
   private final String code;
   private final String externalErrorMessage;
