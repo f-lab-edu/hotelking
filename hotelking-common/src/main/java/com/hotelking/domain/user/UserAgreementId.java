@@ -6,8 +6,12 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.io.Serializable;
+import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserAgreementId implements Serializable {
 
   @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -26,11 +30,7 @@ public class UserAgreementId implements Serializable {
     if (!(o instanceof UserAgreementId that)) {
       return false;
     }
-
-    if (!agreement.equals(that.agreement)) {
-      return false;
-    }
-    return user.equals(that.user);
+    return Objects.equals(user, that.user);
   }
 
   @Override

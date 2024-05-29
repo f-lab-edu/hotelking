@@ -16,4 +16,9 @@ public class UserAgreement extends BaseTimeEntity {
 
   @Column(name = "user_agreement_agree", nullable = false)
   private boolean isAgree;
+
+  public UserAgreement(UserAgreementId userAgreementId, boolean isAgree) {
+    this.userAgreementId = userAgreementId;
+    this.isAgree = isAgree;
+  }
 }

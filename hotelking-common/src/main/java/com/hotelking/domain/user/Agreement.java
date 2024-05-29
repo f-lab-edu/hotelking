@@ -1,9 +1,12 @@
 package com.hotelking.domain.user;
 
 import com.hotelking.domain.BaseTimeEntity;
+import com.hotelking.domain.user.vo.AgreementName;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,13 +24,14 @@ public class Agreement extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "aggre_name", nullable = false)
-  private String name;
+  @Enumerated(value = EnumType.STRING)
+  @Column(name = "agreement_name", nullable = false, unique = true)
+  private AgreementName name;
 
-  @Column(name = "aggre_content", nullable = false)
+  @Column(name = "agreement_content", nullable = false)
   private String content;
 
-  @Column(name = "aggre_mandatory", nullable = false)
+  @Column(name = "agreement_mandatory", nullable = false)
   private boolean isMandatory;
 
   @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "agreement")
