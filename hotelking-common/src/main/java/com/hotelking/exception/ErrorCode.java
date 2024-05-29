@@ -30,7 +30,11 @@ public enum ErrorCode {
   USER_AUTH_ARGUMENT("U009", "인증번호가 일치하지 않습니다.", "필드는 null 일 수 없습니다.", HttpStatus.BAD_REQUEST),
 
   NOT_READABLE("C001", "잘못된 요청값입니다.", "잘못된 요청값입니다.",  HttpStatus.BAD_REQUEST),
-  NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR);
+  NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR),
+
+  // User
+  USER_INVALID_PARAM_ID("U001", "유저의 입력정보가 부정확합니다.", "userId 는 필수입니다.", HttpStatus.BAD_REQUEST),
+  USER_INVALID_PARAM_PWD("U002", "유저의 입력정보가 부정확합니다.", "password 는 필수입니다.", HttpStatus.BAD_REQUEST);
 
   private final String code;
   private final String externalErrorMessage;

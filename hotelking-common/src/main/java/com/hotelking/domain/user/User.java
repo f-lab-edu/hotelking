@@ -4,6 +4,8 @@ import com.hotelking.domain.BaseTimeEntity;
 import com.hotelking.domain.user.vo.UserName;
 import com.hotelking.domain.user.vo.UserPhone;
 import com.hotelking.domain.user.vo.UserStatus;
+import com.hotelking.exception.ErrorCode;
+import com.hotelking.exception.HotelkingException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -13,6 +15,7 @@ import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -42,9 +45,20 @@ public class User extends BaseTimeEntity {
     if (id != null) {
       this.id = id;
     }
+    validateNotNullAndNotEmpty(userId, password);
     this.userId = userId;
     this.password = password;
     this.userPhone = new UserPhone(phoneNumber);
+  }
+
+  private void validateNotNullAndNotEmpty(String userId, String password) {
+    if (!StringUtils.hasLength(userId)) {
+      throw new HotelkingException(ErrorCode.USER_INVALID_PARAM_ID, null);
+    }
+
+    if (!StringUtils.hasLength(password)) {
+      throw new HotelkingException(ErrorCode.USER_INVALID_PARAM_PWD, null);
+    }
   }
 
 }
