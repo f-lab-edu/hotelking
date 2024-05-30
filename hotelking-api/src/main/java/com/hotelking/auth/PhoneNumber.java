@@ -22,7 +22,7 @@ public class PhoneNumber {
 
   private void verifyPhoneNumberFormat(String number) {
     if (PhoneNumberValidator.isNotValidFormat(number)) {
-      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE, null);
+      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE_NUMBER, null);
     }
   }
 }

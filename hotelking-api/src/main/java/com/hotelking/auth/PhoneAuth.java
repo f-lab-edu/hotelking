@@ -53,7 +53,7 @@ public class PhoneAuth extends BaseTimeEntity {
     }
 
     if (authCode == null) {
-      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE, null);
+      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE_CODE, null);
     }
 
     this.phoneNumber = new PhoneNumber(phoneNumber);
@@ -64,5 +64,9 @@ public class PhoneAuth extends BaseTimeEntity {
 
   private LocalDateTime generateExpiredDate() {
     return LocalDateTime.now().plusMinutes(INTERVAL_MINUTE);
+  }
+
+  public Long getId() {
+    return id;
   }
 }
