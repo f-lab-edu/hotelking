@@ -18,6 +18,10 @@ public enum ErrorCode {
   REQ_ORDER_STAY("R005", "잘못된 예약 정보 입력입니다.", "날짜가 같은 숙박 예약 정보 입력 불가(최소 1박 이상)", HttpStatus.BAD_REQUEST),
   REQ_ORDER_DATE("R006", "잘못된 예약 정보 입력입니다.", "체크인은 체크아웃보다 먼저 와야한다.", HttpStatus.BAD_REQUEST),
 
+  // User
+  USER_AUTH_PHONE("U001", "인증번호는 필수입력 정보입니다.", "인증번호는 필수입력 정보입니다.", HttpStatus.BAD_REQUEST),
+  USER_AUTH_PHONE_FORMAT_1("U002", "올바르지 못한 인증 정보 입니다.", "잘못된 인증번호 포맷(6자리의 숫자)", HttpStatus.BAD_REQUEST),
+
   NOT_READABLE("C001", "잘못된 요청값입니다.", "잘못된 요청값입니다.",  HttpStatus.BAD_REQUEST),
   NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR);
 
