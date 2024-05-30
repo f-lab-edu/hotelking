@@ -1,4 +1,4 @@
-package com.hotelking.auth;
+package com.hotelking.global.util;
 
 import java.util.Random;
 

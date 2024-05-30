@@ -2,10 +2,10 @@ package com.hotelking.application;
 
 import com.hotelking.auth.PhoneAuth;
 import com.hotelking.auth.PhoneAuthCode;
-import com.hotelking.auth.PhoneAuthCodeGenerator;
-import com.hotelking.auth.PhoneAuthDto;
+import com.hotelking.global.util.PhoneAuthCodeGenerator;
+import com.hotelking.dto.auth.PhoneAuthDto;
 import com.hotelking.auth.PhoneAuthRepository;
-import com.hotelking.auth.PhoneAuthToken;
+import com.hotelking.dto.auth.PhoneAuthToken;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import org.springframework.security.crypto.encrypt.BytesEncryptor;

@@ -1,4 +1,4 @@
-package com.hotelking.auth;
+package com.hotelking.dto.auth;
 
 public record PhoneAuthToken(String token) {
 

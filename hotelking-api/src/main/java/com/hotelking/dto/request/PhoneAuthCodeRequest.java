@@ -1,6 +1,6 @@
 package com.hotelking.dto.request;
 
-import com.hotelking.auth.PhoneAuthDto;
+import com.hotelking.dto.auth.PhoneAuthDto;
 import com.hotelking.dto.RequestDtoCheckable;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
