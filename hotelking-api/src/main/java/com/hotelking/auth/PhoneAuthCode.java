@@ -24,11 +24,11 @@ public class PhoneAuthCode {
 
   private void verifyCodeFormat(final String value) {
     if (value == null) {
-      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE, null);
+      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE_CODE, null);
     }
 
     if (value.length() != VERIFY_CODE_LENGTH || !value.matches(VERIFY_CODE_PATTERN)) {
-      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE, null);
+      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE_FORMAT_1, null);
     }
   }
 }
