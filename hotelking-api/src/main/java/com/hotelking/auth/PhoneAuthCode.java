@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PhoneVerifyCode {
+public class PhoneAuthCode {
 
   public static final int VERIFY_CODE_LENGTH = 6;
   public static final String VERIFY_CODE_PATTERN = "\\d+";
 
-  @Column(name = "verify_code", length = 6, nullable = false, updatable = false)
+  @Column(name = "auth_code", length = 6, nullable = false, updatable = false)
   private String value;
 
-  public PhoneVerifyCode(final String value) {
+  public PhoneAuthCode(final String value) {
     verifyCodeFormat(value);
     this.value = value;
   }

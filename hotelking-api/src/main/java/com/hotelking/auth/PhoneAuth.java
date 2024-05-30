@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "phone_verification")
-public class PhoneVerification extends BaseTimeEntity {
+@Table(name = "phone_auth")
+public class PhoneAuth extends BaseTimeEntity {
 
   public static final int INTERVAL_MINUTE = 3;
 
@@ -30,7 +30,10 @@ public class PhoneVerification extends BaseTimeEntity {
   private Long id;
 
   @Embedded
-  private PhoneVerifyCode verifyCode;
+  private PhoneNumber phoneNumber;
+
+  @Embedded
+  private PhoneAuthCode authCode;
 
   @Column(name = "is_verified", nullable = false)
   private boolean isVerifed;
@@ -44,16 +47,17 @@ public class PhoneVerification extends BaseTimeEntity {
   private LocalDateTime verifiedAt;
 
   @Builder
-  public PhoneVerification(final Long id, final PhoneVerifyCode verifyCode) {
+  public PhoneAuth(final Long id, final PhoneAuthCode authCode, final String phoneNumber) {
     if (Objects.nonNull(id)) {
       this.id = id;
     }
 
-    if (verifyCode == null) {
+    if (authCode == null) {
       throw new HotelkingException(ErrorCode.USER_AUTH_PHONE, null);
     }
 
-    this.verifyCode = verifyCode;
+    this.phoneNumber = new PhoneNumber(phoneNumber);
+    this.authCode = authCode;
     this.isVerifed = false;
     this.expiredAt = generateExpiredDate();
   }
