@@ -33,7 +33,6 @@ public class AuthService {
     PhoneAuthCode phoneAuthCode = new PhoneAuthCode(PhoneAuthCodeGenerator.generateAuthCode());
     PhoneAuth phoneAuth = phoneAuthDto.toPhoneAuth(phoneAuthCode);
     PhoneAuth phoneAuthSaved = phoneAuthRepository.save(phoneAuth);
-    System.out.println(phoneAuthSaved.getAuthCode());
     final String token = encryptedPhoneAuthId(phoneAuthSaved);
     return PhoneAuthToken.from(token);
   }

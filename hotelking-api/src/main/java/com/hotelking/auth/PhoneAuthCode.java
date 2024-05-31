@@ -19,7 +19,6 @@ public class PhoneAuthCode {
 
   public PhoneAuthCode(final String value) {
     verifyCodeFormat(value);
-    System.out.println(value);
     this.value = value;
   }
 
