@@ -19,6 +19,7 @@ public class PhoneAuthCode {
 
   public PhoneAuthCode(final String value) {
     verifyCodeFormat(value);
+    System.out.println(value);
     this.value = value;
   }
 
@@ -30,5 +31,9 @@ public class PhoneAuthCode {
     if (value.length() != VERIFY_CODE_LENGTH || !value.matches(VERIFY_CODE_PATTERN)) {
       throw new HotelkingException(ErrorCode.USER_AUTH_PHONE_FORMAT_1, null);
     }
+  }
+
+  public boolean isSame(PhoneAuthCode phoneAuthCode) {
+    return value.equals(phoneAuthCode.value);
   }
 }

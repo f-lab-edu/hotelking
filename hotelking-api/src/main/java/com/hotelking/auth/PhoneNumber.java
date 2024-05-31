@@ -25,4 +25,9 @@ public class PhoneNumber {
       throw new HotelkingException(ErrorCode.USER_AUTH_PHONE_NUMBER, null);
     }
   }
+
+  public boolean isSame(PhoneNumber phoneNumber) {
+    return number.equals(phoneNumber.number);
+  }
+
 }

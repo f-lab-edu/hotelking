@@ -22,6 +22,12 @@ public enum ErrorCode {
   USER_AUTH_PHONE_CODE("U001", "인증번호는 필수입력 정보입니다.", "인증번호는 필수입력 정보입니다.", HttpStatus.BAD_REQUEST),
   USER_AUTH_PHONE_FORMAT_1("U002", "올바르지 못한 인증 정보 입니다.", "잘못된 인증번호 포맷(6자리의 숫자)", HttpStatus.BAD_REQUEST),
   USER_AUTH_PHONE_NUMBER("U003", "휴대전화는 필수입력 정보입니다.", "휴대전화는 필수입력 정보입니다.", HttpStatus.BAD_REQUEST),
+  USER_AUTH_PHONE_CONFIRM_NOTFOUND("U004", "인증번호가 일치하지 않습니다.", "존재하지 않는 인증번호 코드", HttpStatus.BAD_REQUEST),
+  USER_AUTH_PHONE_CONFIRM_TIMEOVER("U005", "시간초과 되었습니다. 다시 인증번호 발급을 요청하시기 바랍니다.", "시간초과된 인증번호 코드", HttpStatus.BAD_REQUEST),
+  USER_AUTH_PHONE_CONFIRM_VERIFIED("U006", "이미 휴대폰 인증이 완료되었습니다.", "인증된 코드에 중복 요청", HttpStatus.BAD_REQUEST),
+  USER_AUTH_PHONE_CONFIRM_NOT_SAME("U007", "인증번호가 일치하지 않습니다.", "존재하지만 잘못된 인증번호 요청", HttpStatus.BAD_REQUEST),
+  USER_AUTH_PHONE_CONFIRM_DECRYPT_ERROR("U008", "인증번호가 일치하지 않습니다.", "휴대폰 인증 토큰 에러", HttpStatus.BAD_REQUEST),
+  USER_AUTH_ARGUMENT("U009", "인증번호가 일치하지 않습니다.", "필드는 null 일 수 없습니다.", HttpStatus.BAD_REQUEST),
 
   NOT_READABLE("C001", "잘못된 요청값입니다.", "잘못된 요청값입니다.",  HttpStatus.BAD_REQUEST),
   NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR);
