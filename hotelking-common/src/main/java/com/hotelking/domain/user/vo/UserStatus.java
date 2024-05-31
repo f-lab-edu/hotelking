@@ -16,7 +16,7 @@ public class UserStatus {
   @Column(name = "user_withdrawal", nullable = false)
   private boolean isWithdrawal;
 
-  @Column(name = "deleted_at", columnDefinition = "TIMESTAMP(0)", nullable = false)
+  @Column(name = "deleted_at", columnDefinition = "TIMESTAMP(0)")
   @Temporal(value = TemporalType.TIMESTAMP)
   private LocalDateTime deletedAt;
 
