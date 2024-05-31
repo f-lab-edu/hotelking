@@ -6,14 +6,11 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.time.LocalDateTime;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserStatus {
 
-  @Column(name = "user_withdrawal", nullable = false)
+  @Column(name = "user_withdrawal")
   private boolean isWithdrawal;
 
   @Column(name = "deleted_at", columnDefinition = "TIMESTAMP(0)")
@@ -22,5 +19,9 @@ public class UserStatus {
 
   private boolean isNotDeleted() {
     return !isWithdrawal;
+  }
+
+  public UserStatus() {
+    this.isWithdrawal = false;
   }
 }

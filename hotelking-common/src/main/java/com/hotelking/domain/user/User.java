@@ -51,6 +51,7 @@ public class User extends BaseTimeEntity {
     this.userId = userId;
     this.password = password;
     this.userPhone = new UserPhone(phoneNumber);
+    this.userStatus = new UserStatus();
   }
 
   private void validateNotNullAndNotEmpty(String userId, String password) {
