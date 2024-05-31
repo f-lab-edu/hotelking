@@ -17,6 +17,10 @@ public class PhoneAuthCode {
   @Column(name = "auth_code", length = 6, nullable = false, updatable = false)
   private String value;
 
+  public String getValue() {
+    return value;
+  }
+
   public PhoneAuthCode(final String value) {
     verifyCodeFormat(value);
     this.value = value;

@@ -1,1 +1,22 @@
+spring:
+  sql:
+    init:
+      mode: always
+  datasource:
+    url: jdbc:h2:file:./testdb;AUTO_SERVER=true;MODE=mysql
+    username: sa
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+    defer-datasource-initialization: true
+    generate-ddl: true
+
 secret-key: hotelkingsecretkey
