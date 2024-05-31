@@ -9,6 +9,9 @@ dependencies {
     // encrypt
     implementation 'org.springframework.security:spring-security-crypto'
 
+    // for validation null check
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+
     implementation project(':hotelking-engine')
     implementation project(':hotelking-common')
 }
