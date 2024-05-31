@@ -3,7 +3,7 @@ spring:
     init:
       mode: always
   datasource:
-    url: jdbc:h2:file:./testdb;AUTO_SERVER=true;MODE=mysql
+    url: jdbc:h2:mem
     username: sa
     password: password
 
