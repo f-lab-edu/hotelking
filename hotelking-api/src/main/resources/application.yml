@@ -20,3 +20,4 @@ spring:
     generate-ddl: true
 
 secret-key: hotelkingsecretkey
+salt: 12362819

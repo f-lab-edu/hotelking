@@ -11,12 +11,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class AuthConfig {
 
-  @Value("secret-key")
+  @Value("${secret-key}")
   private String secret;
 
+  @Value("${salt}")
+  private String salt;
+
   @Bean
-  public BytesEncryptor bytesEncryptor() {
-    return new AesBytesEncryptor(secret, "12362819");
+  BytesEncryptor bytesEncryptor() {
+    return new AesBytesEncryptor(secret, salt);
   }
 
   @Bean
