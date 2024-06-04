@@ -67,7 +67,6 @@ public class AuthService {
     }
   }
 
-  @Transactional(readOnly = true)
   public void checkTokenVerified(String token) {
     final long phoneAuthId = decryptToken(token);
     final PhoneAuth phoneAuth = findPhoneAuth(phoneAuthId);
