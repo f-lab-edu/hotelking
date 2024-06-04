@@ -6,13 +6,19 @@ import com.hotelking.domain.user.vo.UserPhone;
 import com.hotelking.domain.user.vo.UserStatus;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -42,6 +48,9 @@ public class User extends BaseTimeEntity {
   @Embedded
   private UserStatus userStatus;
 
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
+  private Set<UserAgreement> userAgreements = new HashSet<>();
+
   @Builder
   public User(final Long id, final String userId, final String password, final String phoneNumber) {
     if (id != null) {
@@ -64,4 +73,20 @@ public class User extends BaseTimeEntity {
     }
   }
 
+  public void agreeToTerms(Set<Term> terms) {
+    this.userAgreements = createUserAgreements(terms);
+  }
+
+  private Set<UserAgreement> createUserAgreements(Set<Term> terms) {
+    return terms.stream().map(it ->
+            UserAgreement.builder()
+                .userAgreementId(
+                    UserAgreementId.builder()
+                        .user(this)
+                        .term(it)
+                        .build())
+                .isAgree(true)
+                .build())
+        .collect(Collectors.toUnmodifiableSet());
+  }
 }
