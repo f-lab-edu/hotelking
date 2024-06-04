@@ -22,7 +22,7 @@ public class UserController {
   @PostMapping("/signup")
   public ApiResponse<Void> createUser(@RequestBody AddUserRequest addUserRequest) {
     authService.checkTokenVerified(addUserRequest.token());
-    userService.addUser(addUserRequest.toAddUserDto(), addUserRequest.toAgreementNames());
+    userService.addUser(addUserRequest.toAddUserDto(), addUserRequest.toTermIdsDto());
     return ApiResponse.success();
   }
 }

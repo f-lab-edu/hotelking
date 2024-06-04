@@ -1,16 +1,16 @@
 package com.hotelking.dto.request;
 
-import com.hotelking.domain.user.vo.AgreementName;
 import com.hotelking.dto.AddUserDto;
-import com.hotelking.dto.AgreementNames;
+import com.hotelking.dto.TermIdsDto;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public record AddUserRequest(
     String userId,
     String password,
     String phoneNumber,
     String token,
-    Set<AgreementName> agreementNames
+    Set<AgreementTerm> agreementOfTerms
 ) {
 
   public AddUserDto toAddUserDto() {
@@ -21,9 +21,12 @@ public record AddUserRequest(
         .build();
   }
 
-  public AgreementNames toAgreementNames() {
-    return AgreementNames.builder()
-        .agreementNames(agreementNames)
+  public TermIdsDto toTermIdsDto() {
+    return TermIdsDto.builder()
+        .termIdDtoSet(
+            agreementOfTerms.stream()
+                .map(AgreementTerm::toTermIdDto)
+                .collect(Collectors.toSet()))
         .build();
   }
 }
