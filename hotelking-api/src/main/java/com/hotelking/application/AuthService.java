@@ -32,7 +32,6 @@ public class AuthService {
   @Transactional
   public PhoneAuthToken issuePhoneAuth(PhoneAuthDto phoneAuthDto) {
     PhoneAuthCode phoneAuthCode = new PhoneAuthCode(PhoneAuthCodeGenerator.generateAuthCode());
-    System.out.println(phoneAuthCode.getValue());
     PhoneAuth phoneAuth = phoneAuthDto.toPhoneAuth(phoneAuthCode);
     PhoneAuth phoneAuthSaved = phoneAuthRepository.save(phoneAuth);
     final String token = encryptedPhoneAuthId(phoneAuthSaved);
