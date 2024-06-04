@@ -31,4 +31,8 @@ public class PhoneAuthCode {
       throw new HotelkingException(ErrorCode.USER_AUTH_PHONE_FORMAT_1, null);
     }
   }
+
+  public boolean isSame(PhoneAuthCode phoneAuthCode) {
+    return value.equals(phoneAuthCode.value);
+  }
 }

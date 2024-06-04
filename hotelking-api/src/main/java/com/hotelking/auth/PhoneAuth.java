@@ -16,11 +16,13 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "phone_auth")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PhoneAuth extends BaseTimeEntity {
 
   public static final int INTERVAL_MINUTE = 3;
@@ -36,7 +38,7 @@ public class PhoneAuth extends BaseTimeEntity {
   private PhoneAuthCode authCode;
 
   @Column(name = "is_verified", nullable = false)
-  private boolean isVerifed;
+  private boolean isVerified;
 
   @Column(name = "expired_at", nullable = false, updatable = false)
   @Temporal(value = TemporalType.TIMESTAMP)
@@ -58,7 +60,7 @@ public class PhoneAuth extends BaseTimeEntity {
 
     this.phoneNumber = new PhoneNumber(phoneNumber);
     this.authCode = authCode;
-    this.isVerifed = false;
+    this.isVerified = false;
     this.expiredAt = generateExpiredDate();
   }
 
@@ -66,7 +68,35 @@ public class PhoneAuth extends BaseTimeEntity {
     return LocalDateTime.now().plusMinutes(INTERVAL_MINUTE);
   }
 
-  public Long getId() {
-    return id;
+  private boolean isVerified() {
+    return isVerified;
   }
+
+  private boolean isTimeOver() {
+    return expiredAt.isBefore(LocalDateTime.now());
+  }
+
+  public void confirm() {
+    this.isVerified = true;
+    this.verifiedAt = LocalDateTime.now();
+  }
+
+  private boolean notMatches(PhoneAuthCode authCode, PhoneNumber phoneNumber) {
+    return !this.authCode.isSame(authCode) || !this.phoneNumber.isSame(phoneNumber);
+  }
+
+  public void checkConfirmable(PhoneAuthCode authCode, PhoneNumber phoneNumber) {
+    if (isVerified()) {
+      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE_CONFIRM_VERIFIED, null);
+    }
+
+    if (isTimeOver()) {
+      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE_CONFIRM_TIMEOVER, null);
+    }
+
+    if (notMatches(authCode, phoneNumber)) {
+      throw new HotelkingException(ErrorCode.USER_AUTH_PHONE_CONFIRM_NOT_SAME, null);
+    }
+  }
+
 }
