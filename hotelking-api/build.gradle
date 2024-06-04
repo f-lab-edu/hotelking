@@ -9,6 +9,9 @@ dependencies {
     // encrypt
     implementation 'org.springframework.security:spring-security-crypto'
 
+    // password encoder encrypt implement
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.78'
+
     // for validation null check
     implementation 'org.apache.commons:commons-lang3:3.12.0'
 
