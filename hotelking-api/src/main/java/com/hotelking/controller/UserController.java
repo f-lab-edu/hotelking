@@ -21,6 +21,7 @@ public class UserController {
 
   @PostMapping("/signup")
   public ApiResponse<Void> createUser(@RequestBody AddUserRequest addUserRequest) {
+    addUserRequest.validationCheck();
     authService.checkTokenVerified(addUserRequest.token());
     userService.addUser(addUserRequest.toAddUserDto(), addUserRequest.toTermIdsDto());
     return ApiResponse.success();
