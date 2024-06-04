@@ -6,6 +6,9 @@ repositories {
 }
 
 dependencies {
+    // encrypt
+    implementation 'org.springframework.security:spring-security-crypto'
+
     implementation project(':hotelking-engine')
     implementation project(':hotelking-common')
 }
