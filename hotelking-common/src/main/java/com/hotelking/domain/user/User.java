@@ -91,4 +91,8 @@ public class User extends BaseTimeEntity {
                 .build())
         .collect(Collectors.toUnmodifiableSet());
   }
+
+  public String getUserId() {
+    return userId;
+  }
 }
