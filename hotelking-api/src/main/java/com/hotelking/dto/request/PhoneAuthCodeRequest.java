@@ -6,9 +6,10 @@ import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
 import com.hotelking.global.util.PhoneNumberValidator;
 
-public class PhoneAuthCodeRequest implements RequestDtoCheckable {
-
-  public String phoneNumber;
+public record PhoneAuthCodeRequest(
+    String phoneNumber,
+    AuthServiceType authServiceType
+) implements RequestDtoCheckable {
 
   @Override
   public void validationCheck() {
