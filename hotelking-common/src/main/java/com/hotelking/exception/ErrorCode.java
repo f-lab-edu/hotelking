@@ -29,14 +29,6 @@ public enum ErrorCode {
   USER_AUTH_PHONE_CONFIRM_DECRYPT_ERROR("U008", "인증번호가 일치하지 않습니다.", "휴대폰 인증 토큰 에러", HttpStatus.BAD_REQUEST),
   USER_AUTH_ARGUMENT("U009", "인증번호가 일치하지 않습니다.", "필드는 null 일 수 없습니다.", HttpStatus.BAD_REQUEST),
 
-  // User
-  USER_INVALID_PARAM_ID("U010", "유저의 입력정보가 부정확합니다.", "userId 는 필수입니다.", HttpStatus.BAD_REQUEST),
-  USER_INVALID_PARAM_PWD("U011", "유저의 입력정보가 부정확합니다.", "password 는 필수입니다.", HttpStatus.BAD_REQUEST),
-  USER_INVALID_PARAM_PHONE("U012", "잘못된 휴대폰 번호 양식입니다.", "phoneNumber 는 필수입니다.", HttpStatus.BAD_REQUEST),
-  USER_DUPLICATED_ID("U013", "이미 사용 중인 아이디입니다.", "이미 사용 중인 아이디입니다.", HttpStatus.BAD_REQUEST),
-  USER_NOT_VERIFIED_PHONE("U014", "휴대폰 인증은 필수입니다.", "인증 하지 않고 회원 가입 요청 시도", HttpStatus.BAD_REQUEST),
-  USER_NOT_REQUIRED_TERM("U015", "필수 약관에 동의해야합니다.", "서비스에 필요로 하는 약관에 동의 하지 않음", HttpStatus.BAD_REQUEST),
-
   NOT_READABLE("C001", "잘못된 요청값입니다.", "잘못된 요청값입니다.",  HttpStatus.BAD_REQUEST),
   NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR);
 

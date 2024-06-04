@@ -2,7 +2,6 @@ package com.hotelking.application;
 
 import static com.hotelking.exception.ErrorCode.USER_AUTH_PHONE_CONFIRM_DECRYPT_ERROR;
 import static com.hotelking.exception.ErrorCode.USER_AUTH_PHONE_CONFIRM_NOTFOUND;
-import static com.hotelking.exception.ErrorCode.USER_NOT_VERIFIED_PHONE;
 
 import com.hotelking.auth.PhoneAuth;
 import com.hotelking.auth.PhoneAuthCode;
@@ -68,12 +67,4 @@ public class AuthService {
     }
   }
 
-  @Transactional(readOnly = true)
-  public void checkTokenVerified(String token) {
-    final long phoneAuthId = decryptToken(token);
-    final PhoneAuth phoneAuth = findPhoneAuth(phoneAuthId);
-    if (!phoneAuth.isVerified()) {
-      throw new HotelkingException(USER_NOT_VERIFIED_PHONE, null);
-    }
-  }
 }

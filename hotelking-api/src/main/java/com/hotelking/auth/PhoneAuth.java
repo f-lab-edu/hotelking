@@ -68,7 +68,7 @@ public class PhoneAuth extends BaseTimeEntity {
     return LocalDateTime.now().plusMinutes(INTERVAL_MINUTE);
   }
 
-  public boolean isVerified() {
+  private boolean isVerified() {
     return isVerified;
   }
 
