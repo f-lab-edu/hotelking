@@ -1,7 +1,9 @@
 package com.hotelking.global.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.hotelking.exception.HotelkingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -19,7 +21,8 @@ class PhoneValidatorTest {
       "019-1234-5678"
   })
   void isValidPhoneNumberTest(String phone) {
-    assertThat(PhoneValidator.isNotValidPhoneNumber(phone)).isFalse();
+    assertThatCode(() ->PhoneValidator.validate(phone))
+        .doesNotThrowAnyException();
   }
 
   @DisplayName("잘못 형식의 휴대번호의 경우 isNotValid -> True 반환- 성공")
@@ -30,7 +33,8 @@ class PhoneValidatorTest {
       "010-1234-567"
   })
   void returnFalseNotValidPhoneNumber(String phone) {
-    assertThat(PhoneValidator.isNotValidPhoneNumber(phone)).isTrue();
+    assertThatThrownBy(() -> PhoneValidator.validate(phone))
+        .isInstanceOf(HotelkingException.class);
   }
 
 

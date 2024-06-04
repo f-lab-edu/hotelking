@@ -2,10 +2,10 @@ package com.hotelking.domain.user;
 
 import com.hotelking.domain.BaseTimeEntity;
 import com.hotelking.domain.user.vo.UserName;
-import com.hotelking.domain.user.vo.UserPhone;
 import com.hotelking.domain.user.vo.UserStatus;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
+import com.hotelking.global.util.PhoneValidator;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -39,8 +39,8 @@ public class User extends BaseTimeEntity {
   @Column(name = "user_pwd", nullable = false)
   private String password;
 
-  @Embedded
-  private UserPhone userPhone;
+  @Column(name = "user_phone", nullable = false)
+  private String userPhone;
 
   @Embedded
   private UserName userName;
@@ -57,9 +57,11 @@ public class User extends BaseTimeEntity {
       this.id = id;
     }
     validateNotNullAndNotEmpty(userId, password);
+    PhoneValidator.validate(phoneNumber);
+
     this.userId = userId;
     this.password = password;
-    this.userPhone = new UserPhone(phoneNumber);
+    this.userPhone = phoneNumber;
     this.userStatus = new UserStatus();
   }
 
