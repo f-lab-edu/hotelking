@@ -29,7 +29,6 @@ public class AuthService {
     this.bytesEncryptor = bytesEncryptor;
   }
 
-  @Transactional
   public PhoneAuthToken issuePhoneAuth(PhoneAuthDto phoneAuthDto) {
     PhoneAuthCode phoneAuthCode = new PhoneAuthCode(PhoneAuthCodeGenerator.generateAuthCode());
     PhoneAuth phoneAuth = phoneAuthDto.toPhoneAuth(phoneAuthCode);
