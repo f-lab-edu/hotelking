@@ -16,6 +16,7 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+// Term
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Agreement extends BaseTimeEntity {
@@ -37,4 +38,5 @@ public class Agreement extends BaseTimeEntity {
   @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "agreement")
   private List<AgreementVersion> versions = new ArrayList<>();
 
+  // agreement name , agreement version -> 복합키 로 식별가능, 이러면 굳이 id 가 필요없다., 오버엔지니어링
 }

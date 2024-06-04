@@ -1,6 +1,6 @@
 package com.hotelking.domain.user.vo;
 
-public enum AgreementName {
+public enum TermName {
   TERMS_OF_SERVICE,      // 이용 약관 동의
   PRIVACY_POLICY,        // 개인정보 처리 방침 동의
   MARKETING,             // 마케팅 정보 수신 동의
