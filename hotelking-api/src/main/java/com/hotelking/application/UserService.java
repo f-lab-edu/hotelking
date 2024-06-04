@@ -1,20 +1,19 @@
 package com.hotelking.application;
 
-import static com.hotelking.dto.ServiceType.SIGNUP;
-
-import com.hotelking.domain.user.Agreement;
+import com.hotelking.domain.user.ServiceRequiredTerm;
+import com.hotelking.domain.user.ServiceRequiredTerms;
+import com.hotelking.domain.user.ServiceType;
+import com.hotelking.domain.user.Term;
+import com.hotelking.domain.user.TermId;
 import com.hotelking.domain.user.User;
-import com.hotelking.domain.user.UserAgreement;
-import com.hotelking.domain.user.UserAgreementId;
-import com.hotelking.dto.AgreementNames;
 import com.hotelking.dto.AddUserDto;
+import com.hotelking.dto.TermIdsDto;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
-import com.hotelking.infra.AgreementRepository;
-import com.hotelking.infra.UserAgreementRepository;
+import com.hotelking.infra.ServiceRequiredTermRepository;
+import com.hotelking.infra.TermRepository;
 import com.hotelking.infra.UserRepository;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,41 +23,45 @@ public class UserService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
-  private final UserAgreementRepository userAgreementRepository;
-  private final AgreementRepository agreementRepository;
+  private final TermRepository termRepository;
+  private final ServiceRequiredTermRepository serviceRequiredTermRepository;
 
-  public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-      UserAgreementRepository userAgreementRepository, AgreementRepository agreementRepository) {
+  public UserService(
+      UserRepository userRepository,
+      PasswordEncoder passwordEncoder,
+      TermRepository termRepository,
+      ServiceRequiredTermRepository serviceRequiredTermRepository
+  ) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
-    this.userAgreementRepository = userAgreementRepository;
-    this.agreementRepository = agreementRepository;
+    this.termRepository = termRepository;
+    this.serviceRequiredTermRepository = serviceRequiredTermRepository;
   }
 
   @Transactional
-  public void addUser(AddUserDto addUserDto, AgreementNames agreementNames) {
+  public void addUser(AddUserDto addUserDto, TermIdsDto termIdsDto) {
     verifyNonDuplicateUserId(addUserDto);
-    agreementNames.checkRequiredAgreementsByType(SIGNUP);
+    verifySignupTermsAgreement(termIdsDto);
 
-    String encryptedPwd = passwordEncoder.encode(addUserDto.password());
+    final String encryptedPwd = passwordEncoder.encode(addUserDto.password());
+    final Set<Term> terms = findTermsByIds(termIdsDto.toTermIds());
     User user = addUserDto.toUser(encryptedPwd);
+    user.agreeToTerms(terms);
     userRepository.save(user);
-
-    Set<Agreement> agreements = findAgreementsByNames(agreementNames);
-    Set<UserAgreement> userAgreements = createUserAgreements(agreements, user);
-    userAgreementRepository.saveAll(userAgreements);
   }
 
-  private Set<UserAgreement> createUserAgreements(Set<Agreement> agreements, User user) {
-    return agreements.stream().map(it ->
-        UserAgreement.builder()
-            .userAgreementId(new UserAgreementId(it, user))
-            .isAgree(true)
-            .build()).collect(Collectors.toSet());
+  private void verifySignupTermsAgreement(TermIdsDto termIdsDto) {
+    Set<ServiceRequiredTerm> findServiceTerms = findRequiredTerms();
+    ServiceRequiredTerms serviceRequiredTerms = new ServiceRequiredTerms(findServiceTerms);
+    serviceRequiredTerms.validateRequiredTerms(termIdsDto.toTermIds());
   }
 
-  private Set<Agreement> findAgreementsByNames(AgreementNames agreementNames) {
-    return agreementRepository.findAgreementsByNameIn(agreementNames.toSet());
+  private Set<ServiceRequiredTerm> findRequiredTerms() {
+    return serviceRequiredTermRepository.findDistinctByServiceType(ServiceType.SIGNUP);
+  }
+
+  private Set<Term> findTermsByIds(Set<TermId> termIdSet) {
+    return termRepository.findTermsByTermIdIn(termIdSet);
   }
 
   private void verifyNonDuplicateUserId(AddUserDto addUserDto) {
