@@ -91,4 +91,13 @@ public class User extends BaseTimeEntity {
                 .build())
         .collect(Collectors.toUnmodifiableSet());
   }
+
+  // password 를 밖으로 getter 로 노출시키는 게 맞는 것일까?..
+  public String getPassword() {
+    return password;
+  }
+
+  public Long getId() {
+    return id;
+  }
 }

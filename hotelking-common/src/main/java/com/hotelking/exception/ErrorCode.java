@@ -37,6 +37,8 @@ public enum ErrorCode {
   USER_NOT_VERIFIED_PHONE("U014", "휴대폰 인증은 필수입니다.", "인증 하지 않고 회원 가입 요청 시도", HttpStatus.BAD_REQUEST),
   USER_NOT_REQUIRED_TERM("U015", "필수 약관에 동의해야합니다.", "서비스에 필요로 하는 약관에 동의 하지 않음", HttpStatus.BAD_REQUEST),
   USER_INVALID_PARAM_PWD_CONFIRM("U016", "비밀번호와 비밀번호확인이 일치하지 않습니다.", "비밀번호와 비밀번호확인이 일치하지 않습니다.", HttpStatus.BAD_REQUEST),
+  USER_ID_NOT_FOUND("U017", "계정정보가 일치하지 않습니다. 다시 로그인 바랍니다.", "존재하지 않는 유저 아이디 입력", HttpStatus.BAD_REQUEST),
+  USER_PASSWORD_NOT_MATCH("U018", "계정정보가 일치하지 않습니다. 다시 로그인 바랍니다.", "잘못된 비밀번호 입력", HttpStatus.BAD_REQUEST),
 
   NOT_READABLE("C001", "잘못된 요청값입니다.", "잘못된 요청값입니다.",  HttpStatus.BAD_REQUEST),
   NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR);
