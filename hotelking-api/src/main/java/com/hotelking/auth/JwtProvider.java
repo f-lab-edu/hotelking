@@ -36,12 +36,12 @@ public class JwtProvider {
     this.refreshTokenLifetimeSeconds = refreshTokenLifetimeSeconds;
   }
 
-  public String issueAccessToken(long userId) {
-    return issueToken(userId, AT, accessTokenLifetimeSeconds);
+  public String issueAccessToken(long userPid) {
+    return issueToken(userPid, AT, accessTokenLifetimeSeconds);
   }
 
-  public String issueRefreshToken(long userId) {
-    return issueToken(userId, RT, refreshTokenLifetimeSeconds);
+  public String issueRefreshToken(long userPid) {
+    return issueToken(userPid, RT, refreshTokenLifetimeSeconds);
   }
 
   public Long parseUserId(String token) {
@@ -73,4 +73,7 @@ public class JwtProvider {
     return false;
   }
 
+  public int getRefreshTokenLifetimeSeconds() {
+    return refreshTokenLifetimeSeconds;
+  }
 }
