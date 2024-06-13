@@ -99,4 +99,8 @@ public class User extends BaseTimeEntity {
   public Long getId() {
     return id;
   }
+
+  public String getUserId() {
+    return userId;
+  }
 }
