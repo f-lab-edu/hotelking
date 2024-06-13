@@ -14,6 +14,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
   )
   boolean existsUserId(String userId);
 
+
+  @Query(value = "select u from User u " +
+      "where u.userId = :userId " +
+      "and u.userStatus.isWithdrawal is false")
+  Optional<User> findByUserId(String userId);
+
   @Query(value =
       "select count(u.id) > 0 from User u "
           + "where u.userPhone = :phoneNumber "
