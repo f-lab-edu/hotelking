@@ -41,6 +41,36 @@ public class LoginService {
     return JwtTokenResponse.of(accessToken, refreshToken);
   }
 
+  public JwtTokenResponse reIssueAccessToken(String refreshToken) {
+    validateIsTokenValid(refreshToken);
+    final Long userPid = jwtProvider.parseUserId(refreshToken);
+    validateUserByUserPid(userPid);
+    validateRefreshTokenIsSaved(userPid);
+    return JwtTokenResponse.from(jwtProvider.issueAccessToken(userPid));
+  }
+
+  private void validateUserByUserPid(Long userPid) {
+    boolean existed = userRepository.existsById(userPid);
+    if (!existed) {
+      throw new HotelkingException(ErrorCode.USER_NOT_FOUND, null);
+    }
+  }
+
+  private void validateIsTokenValid(String refreshToken) {
+    boolean validToken = jwtProvider.isValidToken(refreshToken);
+    if (!validToken) {
+      throw new HotelkingException(ErrorCode.JWT_TOKEN_NOT_VALID, null);
+    }
+  }
+
+  private void validateRefreshTokenIsSaved(Long userId) {
+    final String key = generateKey(userId);
+    final Boolean hasKey = redisTemplate.hasKey(key);
+    if (hasKey == null || !hasKey) {
+      throw new HotelkingException(ErrorCode.JWT_RT_TOKEN_EXPIRE, null);
+    }
+  }
+
   private User findUser(String userId) {
     return userRepository.findByUserId(userId)
         .orElseThrow(() -> new HotelkingException(ErrorCode.USER_ID_NOT_FOUND, null));
