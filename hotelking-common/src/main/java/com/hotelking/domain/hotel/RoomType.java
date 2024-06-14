@@ -27,8 +27,8 @@ public class RoomType extends BaseTimeEntity {
   @Column(name = "name", columnDefinition = "VARCHAR(45)", nullable = false)
   private String name;
 
-  @Column(name = "desc", columnDefinition = "VARCHAR(255)", nullable = false)
-  private String desc;
+  @Column(name = "content", columnDefinition = "VARCHAR(255)", nullable = false)
+  private String content;
 
   @Column(name = "check_in_time", columnDefinition = "TIME(0)", nullable = false)
   @Temporal(value = TemporalType.TIME)
