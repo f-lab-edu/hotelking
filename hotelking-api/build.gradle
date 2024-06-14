@@ -23,6 +23,12 @@ dependencies {
     // jwt
     implementation 'com.auth0:java-jwt:4.4.0'
 
+    // docker compose support
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+    // mysql driver
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
     implementation project(':hotelking-engine')
     implementation project(':hotelking-common')
 }
