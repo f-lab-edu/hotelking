@@ -45,6 +45,7 @@ public class UserController {
   public ApiResponse<JwtTokenResponse> issueAccessToken(
       @RequestBody AccessTokenIssueRequest atIssueRequest
   ) {
+    atIssueRequest.validationCheck();
     return ApiResponse.success(loginService.reIssueAccessToken(atIssueRequest.refreshToken()));
   }
 
