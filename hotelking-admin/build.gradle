@@ -6,6 +6,9 @@ repositories {
 }
 
 dependencies {
+    // mysql driver
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
     implementation project(':hotelking-common')
 }
 

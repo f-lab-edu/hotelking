@@ -1,9 +1,10 @@
 package com.hotelking.domain.hotel;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import com.hotelking.domain.hotel.vo.Coordinate;
+import com.hotelking.exception.HotelkingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,6 +35,6 @@ class CoordinateTest {
   })
   void throwExceptionNotRangeLat(double lat, double lng) {
     assertThatThrownBy(() -> new Coordinate(lat, lng))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(HotelkingException.class);
   }
 }

@@ -20,8 +20,10 @@ import jakarta.persistence.TemporalType;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "ROOM_ORDER")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -61,6 +63,10 @@ public class RoomReservation extends BaseTimeEntity {
   @Enumerated(EnumType.STRING)
   @Column(name = "state", columnDefinition = "CHAR(10)", nullable = false)
   private RoomReservationState state;
+
+  public boolean isSchedulable() {
+    return state.isSchedulable();
+  }
 
   @Builder
   public RoomReservation(

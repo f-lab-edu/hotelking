@@ -20,9 +20,11 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Getter;
 
 @Entity
 @Table(name = "ROOM_SCHEDULE")
+@Getter
 public class RoomSchedule extends BaseTimeEntity {
 
   @Id
@@ -52,15 +54,17 @@ public class RoomSchedule extends BaseTimeEntity {
   @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime checkIn;
 
-  @OneToMany(mappedBy = "roomSchedule", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "roomSchedule", fetch = FetchType.LAZY)
   private List<RoomScheduleTimeSlot> roomScheduleTimeSlots;
 
-  //   RoomScheduleTimeSlot 에서 하나라도 예약이 되있는 경우에 isReserved = True
-  //   매번 List<RoomScheduleTimeSlot> -> any isReserved = true ? -> true
   @Column(name = "is_reserved", nullable = false)
   private boolean isReserved;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "reservation_status", columnDefinition = "CHAR(10)", nullable = false)
   private ReservationType reservationType;
+
+  public void markReservedTrue() {
+    this.isReserved = true;
+  }
 }
