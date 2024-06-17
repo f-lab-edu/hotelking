@@ -42,6 +42,10 @@ public enum ErrorCode {
   USER_PASSWORD_NOT_MATCH("U018", "계정정보가 일치하지 않습니다. 다시 로그인 바랍니다.", "잘못된 비밀번호 입력", HttpStatus.BAD_REQUEST),
   USER_FIND_ID_NOT_FOUND_PHONE("U017", "존재하지 않는 유저입니다.", "존재하지 않는 휴대전화 번호로 아이디 찾기 시도", HttpStatus.BAD_REQUEST),
 
+  JWT_RT_TOKEN_EXPIRE("U018", "로그인 기간 만료되었습니다. 다시 로그인 하시기 바랍니다.", "존재 하지않는 RT 로 요청", HttpStatus.BAD_REQUEST),
+  JWT_TOKEN_NOT_VALID("U019", "유효하지 않은 토큰입니다.", "유효하지 않은 토큰입니다.", HttpStatus.BAD_REQUEST),
+  USER_NOT_FOUND("U020", "잘못된 요청입니다. ", "찾을 수 없는 사용자", HttpStatus.BAD_REQUEST),
+
 
   NOT_READABLE("C001", "잘못된 요청값입니다.", "잘못된 요청값입니다.",  HttpStatus.BAD_REQUEST),
   NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR);

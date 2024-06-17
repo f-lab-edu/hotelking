@@ -3,10 +3,11 @@ package com.hotelking.controller;
 import com.hotelking.application.AuthService;
 import com.hotelking.application.LoginService;
 import com.hotelking.application.UserService;
+import com.hotelking.dto.request.AccessTokenIssueRequest;
 import com.hotelking.dto.request.AddUserRequest;
 import com.hotelking.dto.request.LoginRequest;
-import com.hotelking.dto.response.JwtTokenResponse;
 import com.hotelking.dto.request.PhoneAuthConfirmRequest;
+import com.hotelking.dto.response.JwtTokenResponse;
 import com.hotelking.dto.response.UserIdResponse;
 import com.hotelking.response.ApiResponse;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,14 @@ public class UserController {
   @PostMapping("/login")
   public ApiResponse<JwtTokenResponse> loginUser(@RequestBody LoginRequest loginRequest) {
     return ApiResponse.success(loginService.login(loginRequest.toDto()));
+  }
+
+  @PostMapping("/login/token")
+  public ApiResponse<JwtTokenResponse> issueAccessToken(
+      @RequestBody AccessTokenIssueRequest atIssueRequest
+  ) {
+    atIssueRequest.validationCheck();
+    return ApiResponse.success(loginService.reIssueAccessToken(atIssueRequest.refreshToken()));
   }
 
   @PostMapping("/find-user-id")
