@@ -17,6 +17,9 @@ public enum ErrorCode {
   REQ_ORDER_DAESIL("R004", "잘못된 예약 정보 입력입니다.", "날짜가 다른 대실 예약 정보 입력 불가", HttpStatus.BAD_REQUEST),
   REQ_ORDER_STAY("R005", "잘못된 예약 정보 입력입니다.", "날짜가 같은 숙박 예약 정보 입력 불가(최소 1박 이상)", HttpStatus.BAD_REQUEST),
   REQ_ORDER_DATE("R006", "잘못된 예약 정보 입력입니다.", "체크인은 체크아웃보다 먼저 와야한다.", HttpStatus.BAD_REQUEST),
+  REV_NO_SCHEDULE("R007", "비어있는 스케줄이 없습니다. 다른 방을 선택해주세요", "비어있는 스케줄이 없습니다. 다른 방을 선택해주세요", HttpStatus.BAD_REQUEST),
+  REV_ALREADY_SCHEDULED("R008", "해당 예약은 스케줄을 설정할 수 없습니다.", "해당 주문은 이미 스케줄이 존재합니다.", HttpStatus.BAD_REQUEST),
+  REV_NOT_FOUND("R010", "해당되는 예약을 찾을 수 없습니다.", "해당되는 예약을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST),
 
   // User
   USER_AUTH_PHONE_CODE("U001", "인증번호는 필수입력 정보입니다.", "인증번호는 필수입력 정보입니다.", HttpStatus.BAD_REQUEST),
