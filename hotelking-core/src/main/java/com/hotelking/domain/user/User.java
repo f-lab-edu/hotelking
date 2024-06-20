@@ -5,7 +5,7 @@ import com.hotelking.domain.user.vo.UserName;
 import com.hotelking.domain.user.vo.UserStatus;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
-import com.hotelking.global.util.PhoneValidator;
+import com.hotelking.util.PhoneNumberValidator;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -57,7 +57,9 @@ public class User extends BaseTimeEntity {
       this.id = id;
     }
     validateNotNullAndNotEmpty(userId, password);
-    PhoneValidator.validate(phoneNumber);
+    if (PhoneNumberValidator.isNotValidFormat(phoneNumber)) {
+      throw new HotelkingException(ErrorCode.USER_INVALID_PARAM_PHONE, null);
+    }
 
     this.userId = userId;
     this.password = password;
