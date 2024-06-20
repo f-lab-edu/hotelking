@@ -1,8 +1,8 @@
-package com.hotelking.auth;
+package com.hotelking.domain.phone;
 
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
-import com.hotelking.global.util.PhoneNumberValidator;
+import com.hotelking.util.PhoneNumberValidator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;

@@ -4,7 +4,7 @@ import com.hotelking.dto.auth.PhoneAuthDto;
 import com.hotelking.dto.RequestDtoCheckable;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
-import com.hotelking.global.util.PhoneNumberValidator;
+import com.hotelking.util.PhoneNumberValidator;
 
 public record PhoneAuthCodeRequest(
     String phoneNumber,

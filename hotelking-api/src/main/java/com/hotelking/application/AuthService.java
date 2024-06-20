@@ -4,14 +4,14 @@ import static com.hotelking.exception.ErrorCode.USER_AUTH_PHONE_CONFIRM_DECRYPT_
 import static com.hotelking.exception.ErrorCode.USER_AUTH_PHONE_CONFIRM_NOTFOUND;
 import static com.hotelking.exception.ErrorCode.USER_NOT_VERIFIED_PHONE;
 
-import com.hotelking.auth.PhoneAuth;
-import com.hotelking.auth.PhoneAuthCode;
-import com.hotelking.auth.PhoneAuthRepository;
+import com.hotelking.domain.phone.PhoneAuth;
+import com.hotelking.domain.phone.PhoneAuthCode;
+import com.hotelking.domain.phone.PhoneAuthRepository;
 import com.hotelking.dto.auth.PhoneAuthDto;
 import com.hotelking.dto.auth.PhoneAuthToken;
 import com.hotelking.dto.auth.ConfirmAuthDto;
 import com.hotelking.exception.HotelkingException;
-import com.hotelking.global.util.PhoneAuthCodeGenerator;
+import com.hotelking.util.PhoneAuthCodeGenerator;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import org.springframework.security.crypto.encrypt.BytesEncryptor;

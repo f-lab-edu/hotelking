@@ -1,10 +1,7 @@
 package com.hotelking.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.hotelking.exception.ErrorContent;
 
-@JsonInclude(value = Include.NON_NULL)
 public record ApiResponse<T>(String result, T data, ErrorContent error) {
 
   public static <T> ApiResponse<T> success(T data) {

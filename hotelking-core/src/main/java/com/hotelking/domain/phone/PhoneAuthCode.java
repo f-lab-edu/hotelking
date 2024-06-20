@@ -1,4 +1,4 @@
-package com.hotelking.auth;
+package com.hotelking.domain.phone;
 
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;

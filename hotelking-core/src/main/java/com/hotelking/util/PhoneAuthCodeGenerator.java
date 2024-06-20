@@ -1,4 +1,4 @@
-package com.hotelking.global.util;
+package com.hotelking.util;
 
 import java.security.SecureRandom;
 

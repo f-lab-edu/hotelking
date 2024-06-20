@@ -1,4 +1,4 @@
-package com.hotelking.global.util;
+package com.hotelking.util;
 
 import java.util.regex.Pattern;
 import org.springframework.util.StringUtils;

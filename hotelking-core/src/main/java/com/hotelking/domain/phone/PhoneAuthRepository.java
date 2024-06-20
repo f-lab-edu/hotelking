@@ -1,4 +1,4 @@
-package com.hotelking.auth;
+package com.hotelking.domain.phone;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
