@@ -1,5 +1,5 @@
 package com.hotelking.dto;
 
-public record AppUser(long userId){
+public record AppUser(Long userId){
 
 }
