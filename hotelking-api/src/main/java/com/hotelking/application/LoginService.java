@@ -1,12 +1,12 @@
 package com.hotelking.application;
 
-import com.hotelking.global.TokenProvider;
+import com.hotelking.auth.TokenProvider;
 import com.hotelking.domain.user.User;
 import com.hotelking.dto.LoginRequestDto;
 import com.hotelking.dto.response.JwtTokenResponse;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
-import com.hotelking.repository.UserRepository;
+import com.hotelking.domain.user.UserRepository;
 import java.util.concurrent.TimeUnit;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
