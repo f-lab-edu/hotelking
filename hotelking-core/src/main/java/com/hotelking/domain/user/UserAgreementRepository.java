@@ -1,4 +1,4 @@
-package com.hotelking.repository;
+package com.hotelking.domain.user;
 
 import com.hotelking.domain.user.UserAgreement;
 import org.springframework.data.jpa.repository.JpaRepository;

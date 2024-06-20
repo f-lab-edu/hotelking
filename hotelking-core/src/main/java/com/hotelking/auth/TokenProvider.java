@@ -1,7 +1,7 @@
-package com.hotelking.global.auth;
+package com.hotelking.auth;
 
-import static com.hotelking.global.auth.TokenProvider.JwtTokenType.AT;
-import static com.hotelking.global.auth.TokenProvider.JwtTokenType.RT;
+import static com.hotelking.auth.TokenProvider.JwtTokenType.AT;
+import static com.hotelking.auth.TokenProvider.JwtTokenType.RT;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
