@@ -14,8 +14,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-  public static final String AUTH_PREFIX = "Bearer ";
-  public static final String AUTHORIZATION_HEADER_NAME = "Authorization";
   private final TokenProvider tokenProvider;
   private final UserRepository userRepository;
 
