@@ -1,7 +1,7 @@
 package com.hotelking.dto.auth;
 
-import com.hotelking.auth.PhoneAuth;
-import com.hotelking.auth.PhoneAuthCode;
+import com.hotelking.domain.phone.PhoneAuth;
+import com.hotelking.domain.phone.PhoneAuthCode;
 
 public record PhoneAuthDto(String phoneNumber) {
 

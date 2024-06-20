@@ -1,6 +1,6 @@
 package com.hotelking.application;
 
-import com.hotelking.infra.HotelRepository;
+import com.hotelking.repository.HotelRepository;
 import com.hotelking.dto.AddHotelDto;
 import org.springframework.stereotype.Service;
 

@@ -3,7 +3,7 @@ package com.hotelking.global.exception;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.ErrorContent;
 import com.hotelking.exception.HotelkingException;
-import com.hotelking.response.ApiResponse;
+import com.hotelking.dto.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

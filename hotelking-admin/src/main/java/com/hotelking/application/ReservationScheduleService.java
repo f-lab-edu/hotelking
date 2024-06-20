@@ -14,7 +14,7 @@ import com.hotelking.exception.HotelkingException;
 import com.hotelking.query.ReservationScheduleQuery;
 import java.util.List;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class ReservationScheduleService {
@@ -31,8 +31,8 @@ public class ReservationScheduleService {
     this.roomReservationRepository = roomReservationRepository;
   }
 
-  
-  @Transactional
+
+
   public void registerReservationSchedule(AddReservationScheduleDto addReservationScheduleDto) {
     RoomReservation roomReservation = findSchedulableReservation(addReservationScheduleDto);
     List<RoomSchedule> findEmptySchedules = findEmptySchedulesForReservation(addReservationScheduleDto, roomReservation);

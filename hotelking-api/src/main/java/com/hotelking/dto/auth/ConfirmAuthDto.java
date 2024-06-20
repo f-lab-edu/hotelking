@@ -1,7 +1,7 @@
 package com.hotelking.dto.auth;
 
-import com.hotelking.auth.PhoneAuthCode;
-import com.hotelking.auth.PhoneNumber;
+import com.hotelking.domain.phone.PhoneAuthCode;
+import com.hotelking.domain.phone.PhoneNumber;
 import lombok.Builder;
 
 @Builder

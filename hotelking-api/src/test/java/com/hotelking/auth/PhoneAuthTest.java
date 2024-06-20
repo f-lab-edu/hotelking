@@ -3,6 +3,9 @@ package com.hotelking.auth;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.hotelking.domain.phone.PhoneAuth;
+import com.hotelking.domain.phone.PhoneAuthCode;
+import com.hotelking.domain.phone.PhoneNumber;
 import com.hotelking.exception.HotelkingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

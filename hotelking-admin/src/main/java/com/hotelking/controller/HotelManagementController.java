@@ -1,7 +1,7 @@
 package com.hotelking.controller;
 
 import com.hotelking.dto.request.AddHotelRequest;
-import com.hotelking.response.ApiResponse;
+import com.hotelking.dto.response.ApiResponse;
 import com.hotelking.application.AddHotelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

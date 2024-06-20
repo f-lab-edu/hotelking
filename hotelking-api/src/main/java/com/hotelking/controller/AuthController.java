@@ -5,7 +5,7 @@ import com.hotelking.application.UserService;
 import com.hotelking.dto.auth.PhoneAuthToken;
 import com.hotelking.dto.request.PhoneAuthCodeRequest;
 import com.hotelking.dto.request.PhoneAuthConfirmRequest;
-import com.hotelking.response.ApiResponse;
+import com.hotelking.dto.response.ApiResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

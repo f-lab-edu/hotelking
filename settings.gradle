@@ -1,6 +1,3 @@
 rootProject.name = 'hotelking'
-include 'hotelking-admin'
-include 'hotelking-api'
-include 'hotelking-engine'
-include 'hotelking-common'
+include 'hotelking-admin', 'hotelking-api', 'hotelking-core'
 
