@@ -5,7 +5,7 @@ import static com.hotelking.exception.ErrorCode.JWT_TOKEN_NOT_VALID;
 
 import com.hotelking.exception.HotelkingException;
 import com.hotelking.domain.user.UserRepository;
-import com.hotelking.util.TokenExtractor;
+import com.hotelking.util.AuthorizationExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-    final String token = TokenExtractor.extractTokenFromRequest(request);
+    final String token = AuthorizationExtractor.extract(request);
     if (token.isEmpty()) {
       throw new HotelkingException(JWT_TOKEN_NOT_VALID, null);
     }

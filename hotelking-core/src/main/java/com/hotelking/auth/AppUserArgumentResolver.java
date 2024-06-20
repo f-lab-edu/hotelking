@@ -1,7 +1,7 @@
 package com.hotelking.auth;
 
 import com.hotelking.dto.AppUser;
-import com.hotelking.util.TokenExtractor;
+import com.hotelking.util.AuthorizationExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -30,7 +30,7 @@ public class AppUserArgumentResolver implements HandlerMethodArgumentResolver {
   public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
       NativeWebRequest webRequest, WebDataBinderFactory binderFactory){
     HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-    final String token = TokenExtractor.extractTokenFromRequest(request);
+    final String token = AuthorizationExtractor.extract(request);
     return new AppUser(tokenProvider.parseUserId(token));
   }
 }
