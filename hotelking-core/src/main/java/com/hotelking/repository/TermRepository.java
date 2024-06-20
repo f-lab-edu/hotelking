@@ -1,4 +1,4 @@
-package com.hotelking.infra;
+package com.hotelking.repository;
 
 import com.hotelking.domain.user.Term;
 import com.hotelking.domain.user.TermId;

@@ -1,4 +1,4 @@
-package com.hotelking.response;
+package com.hotelking.dto.response;
 
 import com.hotelking.exception.ErrorContent;
 

@@ -4,7 +4,7 @@ import com.hotelking.domain.hotel.RoomType;
 import com.hotelking.domain.reservation.RoomReservation;
 import com.hotelking.domain.reservation.RoomReservationRepository;
 import com.hotelking.domain.schedule.ReservationType;
-import com.hotelking.dto.ActiveUser;
+import com.hotelking.dto.AppUser;
 import com.hotelking.dto.AddRoomReservationDto;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
@@ -30,10 +30,10 @@ public class RoomReservationService {
   }
 
   @Transactional
-  public void addOrder(ActiveUser activeUser, AddRoomReservationDto addRoomReservationDto) {
+  public void addOrder(AppUser appUser, AddRoomReservationDto addRoomReservationDto) {
     checkRoomRevAvailability(addRoomReservationDto);
     final RoomType roomType = findRoomType(addRoomReservationDto);
-    RoomReservation roomReservation = addRoomReservationDto.toRoomRevWithType(activeUser, roomType);
+    RoomReservation roomReservation = addRoomReservationDto.toRoomRevWithType(appUser, roomType);
     roomReservationRepository.save(roomReservation);
   }
 

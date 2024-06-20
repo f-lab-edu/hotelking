@@ -18,7 +18,7 @@ public record AddRoomReservationDto(
     return ChronoUnit.DAYS.between(checkIn, checkOut);
   }
 
-  public RoomReservation toRoomRevWithType(ActiveUser user, RoomType roomType) {
+  public RoomReservation toRoomRevWithType(AppUser user, RoomType roomType) {
     return RoomReservation.builder()
         .hotelId(hotelId)
         .roomType(roomType)

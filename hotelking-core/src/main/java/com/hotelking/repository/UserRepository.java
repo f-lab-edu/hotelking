@@ -1,4 +1,4 @@
-package com.hotelking.infra;
+package com.hotelking.repository;
 
 import com.hotelking.domain.user.User;
 import java.util.Optional;

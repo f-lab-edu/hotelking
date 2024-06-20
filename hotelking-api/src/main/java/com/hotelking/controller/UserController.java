@@ -9,7 +9,7 @@ import com.hotelking.dto.request.LoginRequest;
 import com.hotelking.dto.request.PhoneAuthConfirmRequest;
 import com.hotelking.dto.response.JwtTokenResponse;
 import com.hotelking.dto.response.UserIdResponse;
-import com.hotelking.response.ApiResponse;
+import com.hotelking.dto.response.ApiResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
