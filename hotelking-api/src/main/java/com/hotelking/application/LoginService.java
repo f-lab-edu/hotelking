@@ -1,6 +1,6 @@
 package com.hotelking.application;
 
-import com.hotelking.auth.JwtProvider;
+import com.hotelking.global.TokenProvider;
 import com.hotelking.domain.user.User;
 import com.hotelking.dto.LoginRequestDto;
 import com.hotelking.dto.response.JwtTokenResponse;
@@ -16,19 +16,19 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
   private final UserRepository userRepository;
-  private final JwtProvider jwtProvider;
+  private final TokenProvider tokenProvider;
   private final PasswordEncoder passwordEncoder;
   private final RedisTemplate<String, String> redisTemplate;
   private static final String REFRESH_TOKEN_KEY_PREFIX = "refreshToken:user:";
 
   public LoginService(
       UserRepository userRepository,
-      JwtProvider jwtProvider,
+      TokenProvider tokenProvider,
       PasswordEncoder passwordEncoder,
       RedisTemplate<String, String> redisTemplate
   ) {
     this.userRepository = userRepository;
-    this.jwtProvider = jwtProvider;
+    this.tokenProvider = tokenProvider;
     this.passwordEncoder = passwordEncoder;
     this.redisTemplate = redisTemplate;
   }
@@ -36,17 +36,17 @@ public class LoginService {
   public JwtTokenResponse login(LoginRequestDto loginRequestDto) {
     final User user = findUser(loginRequestDto.userId());
     validatePassword(loginRequestDto, user);
-    final String accessToken = jwtProvider.issueAccessToken(user.getId());
+    final String accessToken = tokenProvider.issueAccessToken(user.getId());
     final String refreshToken = getOrIssueRefreshToken(user.getId());
     return JwtTokenResponse.of(accessToken, refreshToken);
   }
 
   public JwtTokenResponse reIssueAccessToken(String refreshToken) {
     validateIsTokenValid(refreshToken);
-    final Long userPid = jwtProvider.parseUserId(refreshToken);
+    final Long userPid = tokenProvider.parseUserId(refreshToken);
     validateUserByUserPid(userPid);
     validateRefreshTokenIsSaved(userPid);
-    return JwtTokenResponse.from(jwtProvider.issueAccessToken(userPid));
+    return JwtTokenResponse.from(tokenProvider.issueAccessToken(userPid));
   }
 
   private void validateUserByUserPid(Long userPid) {
@@ -57,7 +57,7 @@ public class LoginService {
   }
 
   private void validateIsTokenValid(String refreshToken) {
-    boolean validToken = jwtProvider.isValidToken(refreshToken);
+    boolean validToken = tokenProvider.isValidToken(refreshToken);
     if (!validToken) {
       throw new HotelkingException(ErrorCode.JWT_TOKEN_NOT_VALID, null);
     }
@@ -87,7 +87,7 @@ public class LoginService {
     redisTemplate.opsForValue().set(
         key,
         token,
-        jwtProvider.getRefreshTokenLifetimeSeconds(),
+        tokenProvider.getRefreshTokenLifetimeSeconds(),
         TimeUnit.SECONDS
     );
   }
@@ -104,7 +104,7 @@ public class LoginService {
       return findRefreshToken;
     }
 
-    String refreshToken = jwtProvider.issueRefreshToken(userPid);
+    String refreshToken = tokenProvider.issueRefreshToken(userPid);
     saveRefreshToken(key, refreshToken);
     return refreshToken;
   }

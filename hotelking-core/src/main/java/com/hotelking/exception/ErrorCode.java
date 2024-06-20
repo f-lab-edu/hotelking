@@ -49,6 +49,8 @@ public enum ErrorCode {
   JWT_TOKEN_NOT_VALID("U019", "유효하지 않은 토큰입니다.", "유효하지 않은 토큰입니다.", HttpStatus.BAD_REQUEST),
   USER_NOT_FOUND("U020", "잘못된 요청입니다. ", "찾을 수 없는 사용자", HttpStatus.BAD_REQUEST),
 
+  // authorization
+  AUTH_JWT_NUL("AU001", "인증이 필요한 요청입니다.", "인증 헤더(Authorization) 는 필수입니다. ", HttpStatus.UNAUTHORIZED),
 
   NOT_READABLE("C001", "잘못된 요청값입니다.", "잘못된 요청값입니다.",  HttpStatus.BAD_REQUEST),
   NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR);

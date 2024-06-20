@@ -1,7 +1,7 @@
-package com.hotelking.auth;
+package com.hotelking.global;
 
-import static com.hotelking.auth.JwtProvider.JwtTokenType.AT;
-import static com.hotelking.auth.JwtProvider.JwtTokenType.RT;
+import static com.hotelking.global.TokenProvider.JwtTokenType.AT;
+import static com.hotelking.global.TokenProvider.JwtTokenType.RT;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JwtProvider {
+public class TokenProvider {
 
-  private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
+  private static final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 
   private final int accessTokenLifetimeSeconds;
   private final int refreshTokenLifetimeSeconds;
@@ -26,7 +26,7 @@ public class JwtProvider {
     AT, RT
   }
 
-  public JwtProvider(
+  public TokenProvider(
       @Value("${jwt.secret-key}") String secretKey,
       @Value("${jwt.access-life-time-sec}") int accessTokenLifetimeSeconds,
       @Value("${jwt.refresh-life-time-sec}") int refreshTokenLifetimeSeconds
