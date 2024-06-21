@@ -1,15 +1,13 @@
 package com.hotelking.controller;
 
+import com.hotelking.application.AddHotelService;
 import com.hotelking.dto.request.AddHotelRequest;
 import com.hotelking.dto.response.ApiResponse;
-import com.hotelking.application.AddHotelService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Slf4j
 public class HotelManagementController {
 
   private final AddHotelService addHotelService;
