@@ -4,10 +4,10 @@ import static com.hotelking.exception.ErrorCode.REV_ALREADY_SCHEDULED;
 import static com.hotelking.exception.ErrorCode.REV_NOT_FOUND;
 import static com.hotelking.exception.ErrorCode.REV_NO_SCHEDULE;
 
-import com.hotelking.domain.reservation_schedule.ReservationSchedule;
-import com.hotelking.domain.reservation_schedule.ReservationScheduleRepository;
 import com.hotelking.domain.reservation.RoomReservation;
 import com.hotelking.domain.reservation.RoomReservationRepository;
+import com.hotelking.domain.reservation_schedule.ReservationSchedule;
+import com.hotelking.domain.reservation_schedule.ReservationScheduleRepository;
 import com.hotelking.domain.schedule.RoomSchedule;
 import com.hotelking.dto.request.AddReservationScheduleDto;
 import com.hotelking.exception.HotelkingException;
@@ -34,7 +34,7 @@ public class ReservationScheduleService {
 
 
   public void registerReservationSchedule(AddReservationScheduleDto addReservationScheduleDto) {
-    RoomReservation roomReservation = findSchedulableReservation(addReservationScheduleDto);
+    RoomReservation roomReservation = findSchedulableReservation(addReservationScheduleDto.reservationId());
     List<RoomSchedule> findEmptySchedules = findEmptySchedulesForReservation(addReservationScheduleDto, roomReservation);
     findEmptySchedules.forEach(RoomSchedule::markReservedTrue);
     saveReservationSchedules(findEmptySchedules, roomReservation);
@@ -65,18 +65,16 @@ public class ReservationScheduleService {
     return findEmptySchedules;
   }
 
-  private RoomReservation findSchedulableReservation(AddReservationScheduleDto addReservationScheduleDto) {
-    RoomReservation roomReservation = findSchedule(addReservationScheduleDto);
+  private RoomReservation findSchedulableReservation(long reservationId) {
+    RoomReservation roomReservation = findReservation(reservationId);
     if (!roomReservation.isSchedulable()) {
       throw new HotelkingException(REV_ALREADY_SCHEDULED, null);
     }
     return roomReservation;
   }
 
-  private RoomReservation findSchedule(AddReservationScheduleDto addReservationScheduleDto) {
-    return roomReservationRepository.findById(
-            addReservationScheduleDto.reservationId())
+  private RoomReservation findReservation(long id) {
+    return roomReservationRepository.findById(id)
         .orElseThrow(() -> new HotelkingException(REV_NOT_FOUND, null));
   }
-
 }

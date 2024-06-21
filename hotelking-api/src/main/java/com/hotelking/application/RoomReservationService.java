@@ -87,7 +87,7 @@ public class RoomReservationService {
   }
 
   private long countEmptyDaeSilScheduleRooms(AddRoomReservationDto addRoomReservationDto) {
-    return roomScheduleQuery.countEmptyDasilSchduleRooms(
+    return roomScheduleQuery.countEmptyDasilScheduleRooms(
         addRoomReservationDto.hotelId(),
         addRoomReservationDto.roomTypeId(),
         addRoomReservationDto.checkIn().toLocalDate().atStartOfDay()
