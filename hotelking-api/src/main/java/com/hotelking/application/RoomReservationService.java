@@ -8,8 +8,8 @@ import com.hotelking.dto.AppUser;
 import com.hotelking.dto.AddRoomReservationDto;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
-import com.hotelking.query.RoomScheduleQuery;
-import com.hotelking.query.RoomTypeQuery;
+import com.hotelking.query.RoomScheduleRepository;
+import com.hotelking.query.RoomTypeQueryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoomReservationService {
 
   private final RoomReservationRepository roomReservationRepository;
-  private final RoomScheduleQuery roomScheduleQuery;
-  private final RoomTypeQuery roomTypeQuery;
+  private final RoomScheduleRepository roomScheduleQuery;
+  private final RoomTypeQueryRepository roomTypeQueryRepository;
 
-  public RoomReservationService(RoomReservationRepository roomReservationRepository, RoomScheduleQuery roomScheduleQuery,
-      RoomTypeQuery roomTypeQuery) {
+  public RoomReservationService(RoomReservationRepository roomReservationRepository, RoomScheduleRepository roomScheduleQuery,
+      RoomTypeQueryRepository roomTypeQueryRepository) {
     this.roomReservationRepository = roomReservationRepository;
     this.roomScheduleQuery = roomScheduleQuery;
-    this.roomTypeQuery = roomTypeQuery;
+    this.roomTypeQueryRepository = roomTypeQueryRepository;
   }
 
   @Transactional
@@ -38,7 +38,7 @@ public class RoomReservationService {
   }
 
   private RoomType findRoomType(AddRoomReservationDto addRoomReservationDto) {
-    return roomTypeQuery.findById(addRoomReservationDto.roomTypeId())
+    return roomTypeQueryRepository.findById(addRoomReservationDto.roomTypeId())
         .orElseThrow(() -> new HotelkingException(ErrorCode.NOT_FOUND_ROOM_TYPE, log));
   }
 
