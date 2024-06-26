@@ -9,9 +9,9 @@ import com.hotelking.domain.reservation.RoomReservationRepository;
 import com.hotelking.domain.reservation_schedule.ReservationSchedule;
 import com.hotelking.domain.reservation_schedule.ReservationScheduleRepository;
 import com.hotelking.domain.schedule.RoomSchedule;
-import com.hotelking.dto.request.AddReservationScheduleDto;
+import com.hotelking.dto.AddReservationScheduleDto;
 import com.hotelking.exception.HotelkingException;
-import com.hotelking.query.ReservationScheduleQuery;
+import com.hotelking.query.ReservationScheduleQueryRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +19,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReservationScheduleService {
 
-  private final ReservationScheduleQuery reservationScheduleQuery;
+  private final ReservationScheduleQueryRepository reservationScheduleQueryRepository;
   private final ReservationScheduleRepository reservationScheduleRepository;
   private final RoomReservationRepository roomReservationRepository;
 
-  public ReservationScheduleService(ReservationScheduleQuery reservationScheduleQuery,
+  public ReservationScheduleService(
+      ReservationScheduleQueryRepository reservationScheduleQueryRepository,
       ReservationScheduleRepository reservationScheduleRepository,
       RoomReservationRepository roomReservationRepository) {
-    this.reservationScheduleQuery = reservationScheduleQuery;
+    this.reservationScheduleQueryRepository = reservationScheduleQueryRepository;
     this.reservationScheduleRepository = reservationScheduleRepository;
     this.roomReservationRepository = roomReservationRepository;
   }
@@ -51,7 +52,7 @@ public class ReservationScheduleService {
       AddReservationScheduleDto addReservationScheduleDto,
       RoomReservation roomReservation
   ) {
-    final List<RoomSchedule> findEmptySchedules = reservationScheduleQuery.findSchedulesByRoomIdAndDateRange(
+    final List<RoomSchedule> findEmptySchedules = reservationScheduleQueryRepository.findSchedulesByRoomIdAndDateRange(
         addReservationScheduleDto.roomId(),
         roomReservation.getCheckIn(),
         roomReservation.getCheckOut(),
