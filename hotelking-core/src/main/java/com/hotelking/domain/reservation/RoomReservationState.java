@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum RoomReservationState {
-  PENDING(false), PAID(true), CANCEL(true);
+  PENDING(true), PAID(false), CANCEL(false);
 
   private final boolean isSchedulable;
 }

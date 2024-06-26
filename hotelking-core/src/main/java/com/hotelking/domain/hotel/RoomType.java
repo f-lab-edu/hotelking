@@ -14,8 +14,10 @@ import jakarta.persistence.TemporalType;
 import java.time.LocalTime;
 import java.util.List;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RoomType extends BaseTimeEntity {

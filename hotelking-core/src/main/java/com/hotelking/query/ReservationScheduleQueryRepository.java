@@ -11,42 +11,15 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
-public class ReservationScheduleQuery {
+@Repository
+public class ReservationScheduleQueryRepository {
 
   private final JPAQueryFactory queryFactory;
 
-  public ReservationScheduleQuery(JPAQueryFactory jpaQueryFactory) {
+  public ReservationScheduleQueryRepository(JPAQueryFactory jpaQueryFactory) {
     this.queryFactory = jpaQueryFactory;
-  }
-
-  public boolean existedSchedule(
-      long roomId,
-      LocalDateTime checkIn,
-      LocalDateTime checkOut,
-      ReservationType reservationType
-  ) {
-    long daysBetween = getDaysBetween(checkIn, checkOut);
-    Integer fetchFirst = queryFactory
-        .selectOne()
-        .from(roomSchedule)
-        .where(
-            roomSchedule.room.id.eq(roomId),
-            roomSchedule.checkIn.between(checkIn, checkOut),
-            eqReservationType(reservationType, roomSchedule),
-            roomSchedule.isReserved.eq(false)
-        )
-        .groupBy(roomSchedule.room)
-        .having(roomSchedule.checkIn.count().eq(daysBetween + 1))
-        .fetchFirst();
-
-    return fetchFirst != null;
-  }
-
-  private long getDaysBetween(LocalDateTime checkIn, LocalDateTime checkOut) {
-    return Duration.between(checkIn, checkOut).toDays();
   }
 
   public List<RoomSchedule> findSchedulesByRoomIdAndDateRange(
@@ -56,13 +29,9 @@ public class ReservationScheduleQuery {
       ReservationType reservationType
   ) {
     QRoomSchedule roomSchedule2 = roomSchedule;
-    System.out.println(roomId);
-    System.out.println(checkIn);
-    System.out.println(checkOut);
-    System.out.println(reservationType);
     return queryFactory.selectFrom(roomSchedule)
         .where(
-            roomSchedule.checkIn.between(checkIn, checkOut),
+            rangeBetween(checkIn, checkOut),
             eqReservationType(reservationType, roomSchedule),
             roomSchedule.isReserved.eq(false),
             roomSchedule.room.id.eq(roomId),
@@ -84,13 +53,18 @@ public class ReservationScheduleQuery {
 
   private BooleanExpression eqReservationType(ReservationType reservationType, QRoomSchedule roomSchedule) {
     BooleanExpression bothType = roomSchedule.reservationType.eq(ReservationType.BOTH);
-
     if (reservationType.equals(ReservationType.DAESIL)) {
       return bothType.or(roomSchedule.reservationType.eq(ReservationType.DAESIL));
     }
-
     return bothType.or(roomSchedule.reservationType.eq(ReservationType.STAY));
   }
 
+  private long getDaysBetween(LocalDateTime checkIn, LocalDateTime checkOut) {
+    return Duration.between(checkIn, checkOut).toDays();
+  }
+
+  private BooleanExpression rangeBetween(LocalDateTime checkIn, LocalDateTime checkOut) {
+    return roomSchedule.checkIn.between(checkIn, checkOut);
+  }
 
 }

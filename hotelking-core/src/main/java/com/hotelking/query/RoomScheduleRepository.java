@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface RoomScheduleQuery extends JpaRepository<RoomSchedule, Long> {
+public interface RoomScheduleRepository extends JpaRepository<RoomSchedule, Long> {
 
   @Query("SELECT COUNT(DISTINCT rs.room.id) AS total_rooms " +
       "FROM RoomSchedule rs " +
@@ -41,7 +41,7 @@ public interface RoomScheduleQuery extends JpaRepository<RoomSchedule, Long> {
       "AND rs.reservationType = 'DAESIL' " +
       "AND rs.checkIn = :checkIn " +
       "AND rs.isReserved = false")
-  long countEmptyDasilSchduleRooms(
+  long countEmptyDasilScheduleRooms(
       @Param("hotelId") Long hotelId,
       @Param("roomTypeId") Long roomTypeId,
       @Param("checkIn") LocalDateTime checkIn
