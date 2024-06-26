@@ -6,6 +6,9 @@ repositories {
 }
 
 dependencies {
+    // openapi & swagger ui
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+
     // web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
