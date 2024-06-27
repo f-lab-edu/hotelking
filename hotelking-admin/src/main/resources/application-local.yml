@@ -20,3 +20,11 @@ spring:
 
     defer-datasource-initialization: true
     generate-ddl: true
+
+jwt:
+  secret-key: aG90ZWxraW5naGVsbG8K
+  access-life-time-sec: 86400      # 1일
+  refresh-life-time-sec: 15552000  # 6개월 (86400 * 30 * 6(개월))
+
+springdoc:
+  default-produces-media-type: application/json

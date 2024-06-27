@@ -5,21 +5,21 @@ import com.hotelking.dto.RequestDtoCheckable;
 import com.hotelking.dto.query.RoomAllocationType;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.Builder;
 
-// swagger 표시 잘 되는 지 확인하기, 파라미터 표시될까? 객체로 ? 어떻게 되는 지 보자
-// 살펴보자
-// 객체로 받을 때 요청값 validation 잘하기
+
 @Builder
 public record RoomSearchCriteria(
-    RoomAllocationType allocationType,
-    List<Long> types,
-    LocalDate checkInDate,
-    LocalDate checkOutDate,
-    ReservationType reservationType,
-    boolean reserved
+    @Schema(description = "룸 할당 종류(하나 또는 복수)", implementation = RoomAllocationType.class, requiredMode = RequiredMode.REQUIRED) RoomAllocationType allocationType,
+    @Schema(description = "룸 타입 리스트", type = "list<number>", example = "1, 2, 3", requiredMode = RequiredMode.REQUIRED) List<Long> types,
+    @Schema(description = "체크인 날짜", format = "yyyy-MM-dd", example = "2024-06-05", requiredMode = RequiredMode.REQUIRED) LocalDate checkInDate,
+    @Schema(description = "체크아웃 날짜", format = "yyyy-MM-dd", example = "2024-06-07", requiredMode = RequiredMode.REQUIRED) LocalDate checkOutDate,
+    @Schema(description = "예약 타입(숙박, 대실, 전부)", implementation = ReservationType.class, requiredMode = RequiredMode.REQUIRED) ReservationType reservationType,
+    @Schema(description = "예약유무", type = "boolean", defaultValue = "false", requiredMode = RequiredMode.NOT_REQUIRED) boolean reserved
 ) implements RequestDtoCheckable {
 
   @Override
