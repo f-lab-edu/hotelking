@@ -61,4 +61,14 @@ class MoneyAndDiscountTest {
     MoneyAndDiscount moneyAndDiscount = new MoneyAndDiscount(new Money(price), null);
     assertThat(moneyAndDiscount.getDiscountedPrice().getValue()).isEqualTo(price);
   }
+
+  @Test
+  @DisplayName("객체 생성 시 할인 정보가 null 일 경우 할인 금액, 비율 0 을 설정 - 성공")
+  void getZeroWhenDiscountMoneyIsNull() {
+    final int price = 100000;
+    MoneyAndDiscount moneyAndDiscount = new MoneyAndDiscount(new Money(price), null);
+
+    assertThat(moneyAndDiscount.getDiscountPrice()).isEqualTo(new Money(0));
+    assertThat(moneyAndDiscount.getDiscountPriceRate()).isEqualTo(0);
+  }
 }
