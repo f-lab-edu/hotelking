@@ -54,7 +54,10 @@ public enum ErrorCode {
   AUTH_JWT_DELETE_USER("AU002", "잘못된 요청입니다.", "탈퇴 혹은 존재하지 않은 유저의 토큰으로 요청 시도", HttpStatus.BAD_REQUEST),
 
   NOT_READABLE("C001", "잘못된 요청값입니다.", "잘못된 요청값입니다.",  HttpStatus.BAD_REQUEST),
-  NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR);
+  NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR),
+
+  // price
+  PRICE_MIN("P001", "최소 1만원 이상 설정 해야합니다.", "가격은 1만원 이상 설정해야한다.", HttpStatus.BAD_REQUEST);
 
   private final String code;
   private final String externalErrorMessage;
