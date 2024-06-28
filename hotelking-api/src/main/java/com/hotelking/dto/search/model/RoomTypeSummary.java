@@ -10,7 +10,7 @@ public record RoomTypeSummary(
     int roomTypeMaxPersons,
     List<RoomTypeBed> roomTypeBeds,
     int leftCount,
-    RoomTypeImages roomTypeImages,
+    List<String> roomTypeImages,
     RoomTypeStaySummary roomTypeStaySummary,
     RoomTypeDaesilSummary roomTypeDaesilSummary
 ) { }
