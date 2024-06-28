@@ -14,6 +14,7 @@ import jakarta.persistence.TemporalType;
 import java.time.LocalTime;
 import java.util.List;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -45,4 +46,15 @@ public class RoomType extends BaseTimeEntity {
 
   @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
   private List<Room> rooms;
+
+  @Builder
+  public RoomType(String name, String content, LocalTime checkInTime, LocalTime checkOutTime,
+      long hotelId, List<Room> rooms) {
+    this.name = name;
+    this.content = content;
+    this.checkInTime = checkInTime;
+    this.checkOutTime = checkOutTime;
+    this.hotelId = hotelId;
+    this.rooms = rooms;
+  }
 }
