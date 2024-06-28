@@ -1,7 +1,5 @@
 package com.hotelking.domain.price;
 
-import com.hotelking.exception.ErrorCode;
-import com.hotelking.exception.HotelkingException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -9,17 +7,23 @@ import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Price {
-
-  public static final int MINIMUM_PRICE = 10000;
+public class Money {
 
   @Column(name = "price")
   private int value;
 
-  public Price(int value) {
-    if (value < MINIMUM_PRICE) {
-      throw new HotelkingException(ErrorCode.PRICE_MIN, null);
-    }
+  public Money(int value) {
     this.value = value;
+  }
+
+  public int getValue() {
+    return value;
+  }
+
+  public Money minus(Money money) {
+    if (money == null) {
+      return this;
+    }
+    return new Money(Math.abs(this.value - money.value));
   }
 }

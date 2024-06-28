@@ -34,44 +34,56 @@ public class RoomTypePrice extends BaseTimeEntity {
   @Embedded
   @AttributeOverrides({
       @AttributeOverride(name = "price.value", column = @Column(name = "price_friday")),
-      @AttributeOverride(name = "discount.discountAmount", column = @Column(name = "price_friday_discount_amount")),
-      @AttributeOverride(name = "discount.discountRate", column = @Column(name = "price_friday_discount_rate"))
+      @AttributeOverride(name = "discountPrice.value", column = @Column(name = "price_friday_discount_amount")),
+      @AttributeOverride(name = "discountPriceRate", column = @Column(name = "price_friday_discount_rate"))
   })
-  private PriceWithDiscount fridayPriceWithDiscount;
+  private MoneyAndDiscount fridayMoneyAndDiscount;
 
   @Embedded
   @AttributeOverrides({
       @AttributeOverride(name = "price.value", column = @Column(name = "price_saturday")),
-      @AttributeOverride(name = "discount.discountAmount", column = @Column(name = "price_saturday_discount_amount")),
-      @AttributeOverride(name = "discount.discountRate", column = @Column(name = "price_saturday_discount_rate"))
+      @AttributeOverride(name = "discountPrice.value", column = @Column(name = "price_saturday_discount_amount")),
+      @AttributeOverride(name = "discountPriceRate", column = @Column(name = "price_saturday_discount_rate"))
   })
-  private PriceWithDiscount saturdayPriceWithDiscount;
+  private MoneyAndDiscount saturdayMoneyAndDiscount;
 
   @Embedded
   @AttributeOverrides({
       @AttributeOverride(name = "price.value", column = @Column(name = "price_sunday")),
-      @AttributeOverride(name = "discount.discountAmount", column = @Column(name = "price_sunday_discount_amount")),
-      @AttributeOverride(name = "discount.discountRate", column = @Column(name = "price_sunday_discount_rate"))
+      @AttributeOverride(name = "discountPrice.value", column = @Column(name = "price_sunday_discount_amount")),
+      @AttributeOverride(name = "discountPriceRate", column = @Column(name = "price_sunday_discount_rate"))
   })
-  private PriceWithDiscount sundayPriceWithDiscount;
+  private MoneyAndDiscount sundayMoneyAndDiscount;
 
   @Embedded
   @AttributeOverrides({
       @AttributeOverride(name = "price.value", column = @Column(name = "price_weekday")),
-      @AttributeOverride(name = "discount.discountAmount", column = @Column(name = "price_weekday_discount_amount")),
-      @AttributeOverride(name = "discount.discountRate", column = @Column(name = "price_weekday_discount_rate"))
+      @AttributeOverride(name = "discountPrice.value", column = @Column(name = "price_weekday_discount_amount")),
+      @AttributeOverride(name = "discountPriceRate", column = @Column(name = "price_weekday_discount_rate"))
   })
-  private PriceWithDiscount weekdayPriceWithDiscount;
+  private MoneyAndDiscount weekdayMoneyAndDiscount;
 
   @Embedded
   @AttributeOverrides({
       @AttributeOverride(name = "price.value", column = @Column(name = "base_price")),
-      @AttributeOverride(name = "discount.discountAmount", column = @Column(name = "base_price_discount_amount")),
-      @AttributeOverride(name = "discount.discountRate", column = @Column(name = "base_price_discount_rate"))
+      @AttributeOverride(name = "discountPrice.value", column = @Column(name = "base_price_discount_amount")),
+      @AttributeOverride(name = "discountPriceRate", column = @Column(name = "base_price_discount_rate"))
   })
-  private PriceWithDiscount basePriceWithDiscount;
+  private MoneyAndDiscount baseMoneyAndDiscount;
 
-  @Embedded
-  @AttributeOverride(name = "price.value", column = @Column(name = "extra_person_fee"))
-  private Price additionalPersonFee;
+  @Column(name = "extra_person_fee")
+  private Money extraPersonFee;
+
+  public RoomTypePrice(Long id, RoomType roomType, MoneyAndDiscount fridayMoneyAndDiscount,
+      MoneyAndDiscount saturdayMoneyAndDiscount, MoneyAndDiscount sundayMoneyAndDiscount,
+      MoneyAndDiscount weekdayMoneyAndDiscount, MoneyAndDiscount baseMoneyAndDiscount, Money extraPersonFee) {
+    this.id = id;
+    this.roomType = roomType;
+    this.fridayMoneyAndDiscount = fridayMoneyAndDiscount;
+    this.saturdayMoneyAndDiscount = saturdayMoneyAndDiscount;
+    this.sundayMoneyAndDiscount = sundayMoneyAndDiscount;
+    this.weekdayMoneyAndDiscount = weekdayMoneyAndDiscount;
+    this.baseMoneyAndDiscount = baseMoneyAndDiscount;
+    this.extraPersonFee = extraPersonFee;
+  }
 }

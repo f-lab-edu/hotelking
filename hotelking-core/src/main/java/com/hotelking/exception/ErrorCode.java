@@ -57,7 +57,10 @@ public enum ErrorCode {
   NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR),
 
   // price
-  PRICE_MIN("P001", "최소 1만원 이상 설정 해야합니다.", "가격은 1만원 이상 설정해야한다.", HttpStatus.BAD_REQUEST);
+  PRICE_MIN("P001", "기본 룸 가격은 1만원 이상 설정 해야합니다.", "가격은 1만원 이상 설정해야한다.", HttpStatus.BAD_REQUEST),
+  PRICE_DISCOUNT_MIN("P002", "기본 할인 가격은 최소 1000원 이상 이어야 합니다.", "최소 할인 금액(1000) 이상 필수", HttpStatus.BAD_REQUEST),
+  PRICE_TOTAL_MIN("P003", "룸 가격 - 할인 금액은 최소 1000원 이상이어야 합니다.", "최종 룸 가격은 1000원 이상 필수", HttpStatus.BAD_REQUEST);
+
 
   private final String code;
   private final String externalErrorMessage;
