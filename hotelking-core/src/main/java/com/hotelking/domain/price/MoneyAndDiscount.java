@@ -44,12 +44,15 @@ public class MoneyAndDiscount {
   @Builder
   public MoneyAndDiscount(final Money price, final Money discountPrice) {
     checkPassPriceRule(price);
+    if (discountPrice != null) {
+      checkDiscountRule(price, discountPrice);
+    }
+    this.discountPrice = setDiscountPrice(discountPrice);
+    this.discountPriceRate = setDiscountPriceRate(price, discountPrice);
     this.price = price;
-    this.discountPrice = discountPrice(discountedPrice);
-    this.discountPriceRate = discountPriceRate(price, discountPrice);
   }
 
-  private Money discountPrice(Money discountedPrice) {
+  private Money setDiscountPrice(Money discountedPrice) {
     if (discountedPrice == null) {
       return new Money(0);
     }
@@ -76,7 +79,7 @@ public class MoneyAndDiscount {
     }
   }
 
-  private int discountPriceRate(Money price, Money discountPrice) {
+  private int setDiscountPriceRate(Money price, Money discountPrice) {
     if (discountPrice == null) {
       return 0;
     }
