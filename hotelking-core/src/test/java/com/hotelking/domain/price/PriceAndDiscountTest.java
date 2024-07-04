@@ -6,69 +6,74 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.hotelking.exception.HotelkingException;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class MoneyAndDiscountTest {
+class PriceAndDiscountTest {
 
-  @Test
-  @DisplayName("MoneyWithDiscount 객체 생성 - 성공")
-  void createMoneyAndDiscount() {
-    assertThatCode(() -> new MoneyAndDiscount(
-        new Money(10000),
-        new Money(1000)
-    )).doesNotThrowAnyException();
-  }
-
-  @DisplayName("기본 룸 가격이 1만원 일 경우 객체 생성시 예외 발생 - 실패")
   @ParameterizedTest
-  @ValueSource(ints = {0, 1, 9999})
-  void throwExceptionMinRoomPrice(int price) {
-    assertThatThrownBy(() -> new MoneyAndDiscount(
-        new Money(price),
-        new Money(1000)
-    )).isInstanceOf(HotelkingException.class);
-  }
-
-  @DisplayName("할인 금액이 1000원 미만인 경우에는 객체 생성시 예외 발생. - 실패")
-  @ParameterizedTest
-  @ValueSource(ints = {0, 1, 999})
-  void throwExceptionMinDiscount(int price) {
-    assertThatThrownBy(() -> new MoneyAndDiscount(
-        new Money(10000),
-        new Money(price)
-    )).isInstanceOf(HotelkingException.class);
-  }
-
-  @DisplayName("할인 금액을 적용한 룸 가격을 반환 - 성공")
-  @ParameterizedTest
-  @CsvSource(value = {
-      "10000, 1000, 9000",
-      "10000, 2000, 8000",
+  @DisplayName("Builder 를 이용하여 PriceAndDiscount 생성 - 성공")
+  @CsvSource({
+      "10000, 9000, 90",
+      "40000, 39000, 97.5"
   })
-  void getTotalRoomPrice(int price, int discountPrice, int totalPrice) {
-    MoneyAndDiscount moneyAndDiscount = new MoneyAndDiscount(new Money(price), new Money(discountPrice));
-    Money discountTotalPrice = moneyAndDiscount.getDiscountedPrice();
-    assertThat(discountTotalPrice.getValue()).isEqualTo(totalPrice);
+  void createPrice(long price, long discountAmount, double percent) {
+    PriceAndDiscount priceAndDiscount = PriceAndDiscount.builder()
+        .price(price)
+        .discountAmount(discountAmount)
+        .build();
+
+    assertThat(priceAndDiscount.getPrice()).isEqualTo(price);
+    assertThat(priceAndDiscount.getDiscountAmount()).isEqualTo(discountAmount);
+    assertThat(priceAndDiscount.getDiscountPercent()).isEqualTo(percent);
   }
 
-  @DisplayName("할인 금액이 null 인 경우 총 룸 가격은 기본 가격과 동일 - 성공")
   @ParameterizedTest
-  @ValueSource(ints = {10000, 100000, 1000000})
-  void getTotalPriceWhenDiscountPriceIsNull(int price) {
-    MoneyAndDiscount moneyAndDiscount = new MoneyAndDiscount(new Money(price), null);
-    assertThat(moneyAndDiscount.getDiscountedPrice().getValue()).isEqualTo(price);
+  @ValueSource(ints = {0, 9999})
+  @DisplayName("Price 최소 설정 금액 이하일 경우 예외 발생 - 실패")
+  void throwExceptionUnderMinimum(long price) {
+    assertThatThrownBy(() -> new PriceAndDiscount(price, 0))
+        .isInstanceOf(HotelkingException.class);
   }
 
-  @Test
-  @DisplayName("객체 생성 시 할인 정보가 null 일 경우 할인 금액, 비율 0 을 설정 - 성공")
-  void getZeroWhenDiscountMoneyIsNull() {
-    final int price = 100000;
-    MoneyAndDiscount moneyAndDiscount = new MoneyAndDiscount(new Money(price), null);
 
-    assertThat(moneyAndDiscount.getDiscountPrice()).isEqualTo(new Money(0));
-    assertThat(moneyAndDiscount.getDiscountPriceRate()).isEqualTo(0);
+  @ParameterizedTest
+  @ValueSource(ints = {-1, -2, -3, -9999})
+  @DisplayName("Price 의 할인 금액이 음수 이면 예외 발생 - 실패")
+  void throwExceptionWhenDiscountAmountIsNegative(long discountAmount) {
+    assertThatThrownBy(() -> new PriceAndDiscount(10000, discountAmount))
+        .isInstanceOf(HotelkingException.class);
   }
+
+  @ParameterizedTest
+  @ValueSource(ints = {1, 999})
+  @DisplayName("Price 의 할인 금액이 최소 설정 금액 이하 일 경우 예외 발생 - 실패")
+  void throwExceptionWhenDiscountAmountIsUnderMinAmount(long discountAmount) {
+    assertThatThrownBy(() -> new PriceAndDiscount(10000, discountAmount))
+        .isInstanceOf(HotelkingException.class);
+  }
+
+  @ParameterizedTest
+  @CsvSource({
+      "10000, 9001",
+      "40000, 39001"
+  })
+  @DisplayName("할인을 적용한 최종 금액이 최소 설정 금액 보다 크지 아니면 예외발생 - 실패")
+  void throwExceptionWhenDiscountAmountIsUnderMinAmount(long price, long discountAmount) {
+    assertThatThrownBy(() -> new PriceAndDiscount(price, discountAmount))
+        .isInstanceOf(HotelkingException.class);
+  }
+
+  @ParameterizedTest
+  @CsvSource({
+      "10000, 9000",
+      "40000, 39000"
+  })
+  @DisplayName("할인을 적용한 최종 금액이 최소 설정 금액 보다 커야한다. - 실패")
+  void checkTotalPriceRule(long price, long discountAmount) {
+    assertThatCode(() -> new PriceAndDiscount(price, discountAmount))
+        .doesNotThrowAnyException();
+  }
+
 }
