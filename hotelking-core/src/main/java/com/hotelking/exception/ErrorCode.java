@@ -71,6 +71,7 @@ public enum ErrorCode {
   PRICE_CUSTOM_DEFAULT_REQUIRED("P012", "커스텀 가격의 경우 기본 가격정보는 필수 입력 조건입니다.", "CustomPrice.defaultPrice 는 필수", HttpStatus.BAD_REQUEST),
   PRICE_WEEKS_OF_DAY_REQUIRED("P013", "룸 타입 가격설정 시 요일 정보는 필수 입력 조건입니다.", "RoomPriceWeekday 는 필수", HttpStatus.BAD_REQUEST),
   PRICE_ALL_DAY_REQUIRED("P014", "룸 타입 가격 설정시 모든 요일 정보(월 ~ 일, 공휴일)는 필수 입력 조건입니다.", "RoomPriceWeekType 에 있는 모든 요일 정보 필수", HttpStatus.BAD_REQUEST),
+  PRICE_ROOM_TYPE_PRICE_NOT_NULL("P015", "룸 타입과 가격정보는 필수 입력 조건 입니다.", "RoomType, RoomPrice 는 필수", HttpStatus.BAD_REQUEST),
 
   // search
   SEARCH_HOTEL_ID("S001", "호텔 번호는 필수입니다.", "호텔 정보(hotelId)는 필수", HttpStatus.BAD_REQUEST),

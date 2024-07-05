@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+    defer-datasource-initialization: true
+    generate-ddl: true
+
+secret-key: hotelkingsecretkey
+salt: 12362819
+
+jwt:
+  secret-key: aG90ZWxraW5naGVsbG8K
+  access-life-time-sec: 86400      # 1일
+  refresh-life-time-sec: 15552000  # 6개월 (86400 * 30 * 6(개월))
