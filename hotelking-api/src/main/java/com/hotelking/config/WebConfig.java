@@ -28,7 +28,10 @@ public class WebConfig implements WebMvcConfigurer {
 
             // phone auth
             "/phone-verification",
-            "/phone-confirm"
+            "/phone-confirm",
+
+            // search
+            "/search/room/availability/**"
         );
   }
 }

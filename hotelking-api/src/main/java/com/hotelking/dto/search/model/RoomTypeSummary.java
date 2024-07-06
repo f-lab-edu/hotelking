@@ -1,7 +1,10 @@
 package com.hotelking.dto.search.model;
 
+import com.hotelking.domain.hotel.RoomType;
 import java.util.List;
+import lombok.Builder;
 
+@Builder
 public record RoomTypeSummary(
     long roomTypeId,
     String roomTypeName,
@@ -9,8 +12,20 @@ public record RoomTypeSummary(
     int roomTypeStandardPersons,
     int roomTypeMaxPersons,
     List<RoomTypeBed> roomTypeBeds,
-    int leftCount,
     List<String> roomTypeImages,
-    RoomTypeStaySummary roomTypeStaySummary,
-    RoomTypeDaesilSummary roomTypeDaesilSummary
-) { }
+    RoomTypeStayPriceSummary roomTypeStayPriceSummary,
+    RoomTypeDaesilPriceSummary roomTypeDaesilPriceSummary
+) {
+
+  public static RoomTypeSummary from(
+      RoomType roomType
+  ) {
+    return RoomTypeSummary.builder()
+        .roomTypeId(roomType.getId())
+        .roomTypeName(roomType.getName())
+        .roomTypeContent(roomType.getContent())
+        .roomTypeStayPriceSummary(null)
+        .roomTypeDaesilPriceSummary(null)
+        .build();
+  }
+}

@@ -1,9 +1,23 @@
 package com.hotelking.dto.search.model;
 
-public class RoomTypeDaesilSummary {
+import com.hotelking.domain.price.PriceAndDiscount;
+import lombok.Builder;
 
-  private int hours;
-  private int originalPrice;
-  private int discountPrice;
-  private int leftRoomCount;
+@Builder
+public record RoomTypeDaesilPriceSummary(
+    long hours,
+    long originalPrice,
+    long discountPrice,
+    long leftRoomCount
+) {
+  public static RoomTypeDaesilPriceSummary from(
+      long hours,
+      PriceAndDiscount priceAndDiscount
+  ) {
+    return RoomTypeDaesilPriceSummary.builder()
+        .hours(hours)
+        .originalPrice(priceAndDiscount.getPrice())
+        .discountPrice(priceAndDiscount.getPrice())
+        .build();
+  }
 }

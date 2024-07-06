@@ -1,11 +1,30 @@
 package com.hotelking.dto.search.model;
 
+import com.hotelking.domain.price.PriceAndDiscount;
 import java.time.LocalTime;
+import lombok.Builder;
 
-public class RoomTypeStaySummary {
+@Builder
+public record RoomTypeStayPriceSummary(
+    LocalTime checkInTime,
+    LocalTime checkOutTime,
+    long originalPrice,
+    long discountPrice,
+    long emptyRoomCount
+) {
 
-  private LocalTime checkInTime;
-  private LocalTime checkOutTime;
-  private int originalPrice;
-  private int discountPrice;
+  public static RoomTypeStayPriceSummary from(
+      LocalTime checkInTime,
+      LocalTime checkOutime,
+      PriceAndDiscount priceAndDiscount,
+      long emptyRoomCount
+  ) {
+    return RoomTypeStayPriceSummary.builder()
+        .checkInTime(checkInTime)
+        .checkOutTime(checkOutime)
+        .originalPrice(priceAndDiscount.getPrice())
+        .discountPrice(priceAndDiscount.getPrice())
+        .emptyRoomCount(emptyRoomCount)
+        .build();
+  }
 }

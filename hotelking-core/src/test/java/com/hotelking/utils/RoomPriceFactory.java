@@ -15,11 +15,13 @@ public class RoomPriceFactory {
       RoomPriceWeekType day,
       long price,
       long discountAmount,
+      long customAmount,
+      long customDateAmount,
       String dateStr,
       String timeStr
   ) {
     return RoomPrice.builder()
-        .weeksOfDay(List.of(roomPriceWeekday(day, price, discountAmount, dateStr, timeStr)))
+        .weeksOfDay(List.of(roomPriceWeekday(day, price, discountAmount, customAmount, customDateAmount, dateStr, timeStr)))
         .build();
   }
 
@@ -27,11 +29,15 @@ public class RoomPriceFactory {
       RoomPriceWeekType day,
       long price,
       long discountAmount,
+      long customAmount,
+      long customDateAmount,
       String dateStr,
       String timeStr
   ) {
     return RoomPriceWeekday.builder()
-        .prices(List.of(roomPriceElement(price, discountAmount, dateStr, timeStr)))
+        .defaultPrice(priceAndDiscount(price, discountAmount))
+        .customDefaultPrice(priceAndDiscount(customAmount, discountAmount))
+        .customDatePrices(List.of(datePrice(customDateAmount, discountAmount, dateStr, timeStr)))
         .day(day)
         .build();
   }
@@ -90,7 +96,7 @@ public class RoomPriceFactory {
         .build();
   }
 
-  public static PriceAndDiscount defaultPriceAndDiscount() {
+  private static PriceAndDiscount defaultPriceAndDiscount() {
     return priceAndDiscount(100_000L, 0L);
   }
 }

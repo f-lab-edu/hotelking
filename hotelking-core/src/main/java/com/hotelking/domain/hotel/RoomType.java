@@ -1,6 +1,7 @@
 package com.hotelking.domain.hotel;
 
 import com.hotelking.domain.BaseTimeEntity;
+import com.hotelking.domain.price.RoomPriceType;
 import com.hotelking.domain.room.Room;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,6 +47,9 @@ public class RoomType extends BaseTimeEntity {
 
   @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
   private List<Room> rooms;
+
+  @OneToMany(mappedBy = "roomType", fetch = FetchType.LAZY)
+  private List<RoomPriceType> roomPrices;
 
   @Builder
   public RoomType(String name, String content, LocalTime checkInTime, LocalTime checkOutTime,
