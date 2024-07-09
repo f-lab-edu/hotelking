@@ -4,40 +4,33 @@ import com.hotelking.domain.price.CustomPrice;
 import com.hotelking.domain.price.PriceAndDiscount;
 import com.hotelking.domain.price.RoomPrice;
 import com.hotelking.domain.price.RoomPriceElement;
-import com.hotelking.domain.price.RoomPriceWeekType;
-import com.hotelking.domain.price.RoomPriceWeekday;
+import com.hotelking.domain.price.WeekType;
+import com.hotelking.domain.price.WeekdayPrice;
 import java.util.HashMap;
 import java.util.List;
 
 public class RoomPriceFactory {
 
   public static RoomPrice roomPrice(
-      RoomPriceWeekType day,
+      WeekType day,
       long price,
       long discountAmount,
-      long customAmount,
-      long customDateAmount,
-      String dateStr,
-      String timeStr
+      long customAmount
   ) {
     return RoomPrice.builder()
-        .weeksOfDay(List.of(roomPriceWeekday(day, price, discountAmount, customAmount, customDateAmount, dateStr, timeStr)))
+        .weekPrices(List.of(roomPriceWeekday(day, price, discountAmount, customAmount)))
         .build();
   }
 
-  public static RoomPriceWeekday roomPriceWeekday(
-      RoomPriceWeekType day,
+  public static WeekdayPrice roomPriceWeekday(
+      WeekType day,
       long price,
       long discountAmount,
-      long customAmount,
-      long customDateAmount,
-      String dateStr,
-      String timeStr
+      long customAmount
   ) {
-    return RoomPriceWeekday.builder()
-        .defaultPrice(priceAndDiscount(price, discountAmount))
-        .customDefaultPrice(priceAndDiscount(customAmount, discountAmount))
-        .customDatePrices(List.of(datePrice(customDateAmount, discountAmount, dateStr, timeStr)))
+    return WeekdayPrice.builder()
+        .price(priceAndDiscount(price, discountAmount))
+        .customPrice(priceAndDiscount(customAmount, discountAmount))
         .day(day)
         .build();
   }
@@ -71,8 +64,8 @@ public class RoomPriceFactory {
       String key
   ) {
     return CustomPrice.builder()
-        .defaultPrice(priceAndDiscount(price, discountAmount))
-        .timesPrice(priceAndDiscountKey(price, discountAmount, key))
+        .price(priceAndDiscount(price, discountAmount))
+        .timePrice(priceAndDiscountKey(price, discountAmount, key))
         .build();
   }
 

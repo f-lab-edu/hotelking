@@ -23,7 +23,7 @@ class RoomPriceElementTest {
 
     HashMap<String, CustomPrice> customPriceHashMap = new HashMap<>();
     CustomPrice customPrice = CustomPrice.builder()
-        .defaultPrice(defaultPrice)
+        .price(defaultPrice)
         .build();
     customPriceHashMap.put(dateStr, customPrice);
 

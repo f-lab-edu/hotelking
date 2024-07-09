@@ -9,17 +9,17 @@ import lombok.Data;
 @Data
 public class CustomPrice {
 
-    private PriceAndDiscount defaultPrice;
-    private HashMap<String, PriceAndDiscount> timesPrice;
+    private PriceAndDiscount price;
+    private HashMap<String, PriceAndDiscount> timePrice;
 
     @Builder
     public CustomPrice(
-        PriceAndDiscount defaultPrice,
-        HashMap<String, PriceAndDiscount> timesPrice
+        PriceAndDiscount price,
+        HashMap<String, PriceAndDiscount> timePrice
     ) {
-        verifyNotNull(defaultPrice);
-        this.defaultPrice = defaultPrice;
-        this.timesPrice = timesPrice;
+        verifyNotNull(price);
+        this.price = price;
+        this.timePrice = timePrice;
     }
 
     private void verifyNotNull(PriceAndDiscount priceAndDiscount) {

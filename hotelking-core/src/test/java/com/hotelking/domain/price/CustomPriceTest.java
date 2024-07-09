@@ -19,20 +19,20 @@ class CustomPriceTest {
   @DisplayName("CustomPrice 생성 테스트 - 성공")
   void createCustomPrice() {
     CustomPrice customPrice = CustomPrice.builder()
-        .defaultPrice(priceAndDiscount)
-        .timesPrice(timePriceMap)
+        .price(priceAndDiscount)
+        .timePrice(timePriceMap)
         .build();
 
-    assertThat(customPrice.getDefaultPrice()).isEqualTo(priceAndDiscount);
-    assertThat(customPrice.getTimesPrice()).isEqualTo(timePriceMap);
+    assertThat(customPrice.getPrice()).isEqualTo(priceAndDiscount);
+    assertThat(customPrice.getTimePrice()).isEqualTo(timePriceMap);
   }
 
   @Test
   @DisplayName("CustomPrice 생성 시 DefaultPrice 없으면 예외 발생 - 실패")
   void throwExceptionWhenDefaultPriceIsNull() {
     assertThatThrownBy(() -> CustomPrice.builder()
-        .defaultPrice(null)
-        .timesPrice(timePriceMap)
+        .price(null)
+        .timePrice(timePriceMap)
         .build())
         .isInstanceOf(HotelkingException.class);
   }

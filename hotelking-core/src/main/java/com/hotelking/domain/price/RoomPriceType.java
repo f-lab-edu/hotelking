@@ -37,7 +37,7 @@ public class RoomPriceType extends BaseTimeEntity {
   @ManyToOne
   @JoinColumn(
       name = "room_type_id",
-      foreignKey = @ForeignKey(name = "fk_price_room_type_id"),
+      foreignKey = @ForeignKey(name = "fk_price_room_type_id"), // comment
       nullable = false,
       updatable = false
   )
