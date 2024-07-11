@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class SearchRoomController {
+public class HotelRoomSearchController {
 
   private final SearchRoomService searchRoomService;
 
-  public SearchRoomController(SearchRoomService searchRoomService) {
+  public HotelRoomSearchController(SearchRoomService searchRoomService) {
     this.searchRoomService = searchRoomService;
   }
 
