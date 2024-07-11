@@ -86,7 +86,7 @@ public class RoomReservationService {
   }
 
   private boolean isDaeSilReservation(AddRoomReservationDto addRoomReservationDto) {
-    return addRoomReservationDto.reservationType() == ReservationType.DAESIL;
+    return addRoomReservationDto.reservationType() == ReservationType.RENT;
   }
 
   private long countEmptyDaeSilScheduleRooms(AddRoomReservationDto addRoomReservationDto) {

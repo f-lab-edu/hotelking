@@ -12,7 +12,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,8 +30,8 @@ public class RoomScheduleQueryRepository {
 
   public Page<RoomDTO> searchRooms(
       List<Long> roomTypeIds,
-      LocalDateTime checkIn,
-      LocalDateTime checkOut,
+      LocalDate checkIn,
+      LocalDate checkOut,
       ReservationType reservationType,
       RoomAllocationType roomAllocationType,
       boolean reserved,
@@ -71,62 +71,24 @@ public class RoomScheduleQueryRepository {
     return new PageImpl<>(contents, pageable, totalCount);
   }
 
-  public Page<RoomDTO> searchMultiRooms(
-      List<Long> roomTypeIds,
-      LocalDateTime checkIn,
-      LocalDateTime checkOut,
-      ReservationType reservationType,
-      boolean reserved,
-      Pageable pageable
-  ) {
-
-    JPAQuery<RoomDTO> jpaQuery = queryFactory.select(Projections.fields(RoomDTO.class,
-            room.id.as("roomId"),
-            room.no.as("roomNo"),
-            roomType.id.as("roomTypeId"),
-            roomType.checkInTime.as("roomTypeCheckIn"),
-            roomType.checkOutTime.as("roomTypeCheckOut"),
-            roomType.name.as("roomTypeName"),
-            roomSchedule.id.as("roomScheduleId"),
-            roomSchedule.checkIn.as("roomScheduleCheckIn")
-        ))
-        .from(roomSchedule)
-        .join(room).on(room.eq(roomSchedule.room)).fetchJoin()
-        .join(roomType).on(roomType.eq(room.type)).fetchJoin()
-        .where(
-            rangeBetween(checkIn, checkOut),
-            eqReservationType(reservationType),
-            roomSchedule.isReserved.eq(reserved),
-            room.type.id.in(roomTypeIds)
-        );
-
-    long totalCount = jpaQuery.fetchCount();
-    List<RoomDTO> contents = jpaQuery
-        .offset(pageable.getOffset())
-        .limit(pageable.getPageSize())
-        .fetch();
-
-    return new PageImpl<>(contents, pageable, totalCount);
-  }
-
   private BooleanExpression eqReservationType(ReservationType reservationType) {
     BooleanExpression bothType = roomSchedule.reservationType.eq(ReservationType.BOTH);
 
-    if (reservationType.equals(ReservationType.DAESIL)) {
-      return bothType.or(roomSchedule.reservationType.eq(ReservationType.DAESIL));
+    if (reservationType.equals(ReservationType.RENT)) {
+      return bothType.or(roomSchedule.reservationType.eq(ReservationType.RENT));
     }
 
     return bothType.or(roomSchedule.reservationType.eq(ReservationType.STAY));
   }
 
   private BooleanExpression rangeBetween(
-      LocalDateTime checkIn,
-      LocalDateTime checkOut
+      LocalDate checkIn,
+      LocalDate checkOut
   ) {
     return roomSchedule.checkIn.between(checkIn, checkOut);
   }
 
-  private long getDaysBetween(LocalDateTime checkIn, LocalDateTime checkOut) {
+  private long getDaysBetween(LocalDate checkIn, LocalDate checkOut) {
     return Duration.between(checkIn, checkOut).toDays();
   }
 }

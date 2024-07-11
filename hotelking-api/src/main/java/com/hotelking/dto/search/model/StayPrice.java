@@ -4,18 +4,24 @@ import com.hotelking.domain.price.PriceAndDiscount;
 import lombok.Builder;
 
 @Builder
-public record RoomTypeDaesilPriceSummary(
-    long hours,
+public record StayPrice(
     long originalPrice,
     long discountPrice,
     long leftRoomCount
 ) {
-  public static RoomTypeDaesilPriceSummary from(
-      long hours,
+  public static StayPrice from(
+      long remain,
       PriceAndDiscount priceAndDiscount
   ) {
-    return RoomTypeDaesilPriceSummary.builder()
-        .hours(hours)
+    return StayPrice.builder()
+        .leftRoomCount(remain)
+        .originalPrice(priceAndDiscount.getPrice())
+        .discountPrice(priceAndDiscount.getPrice())
+        .build();
+  }
+
+  public static StayPrice from(PriceAndDiscount priceAndDiscount) {
+    return StayPrice.builder()
         .originalPrice(priceAndDiscount.getPrice())
         .discountPrice(priceAndDiscount.getPrice())
         .build();

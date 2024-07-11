@@ -73,14 +73,13 @@ class RoomPriceTest {
   }
 
   @Test
-  @DisplayName("숙박 범위가 주어지면 평균 가격을 계산한다.")
+  @DisplayName("체크인과 체크아웃이 주어지면 평균 가격을 계산한다.")
   void avgPricePerOneDay() {
     var datePrice1 = RoomPriceFactory.datePrice(50_000L, 40_000L, "2024-07-01", "11:00:00");
     var datePrice2 = RoomPriceFactory.datePrice(60_000L, 40_000L, "2024-07-02", "11:00:00");
     var priceWeekDays = createPriceWeekDay(100_000L, 0L, 80_000L);
 
     var date1= LocalDate.parse("2024-07-01", formatter); // date price
-    var date2= LocalDate.parse("2024-07-02", formatter); // date price
     var date3= LocalDate.parse("2024-07-03", formatter); // weekday price -> custom price
 
     var roomPrice = RoomPrice.builder()
@@ -88,10 +87,21 @@ class RoomPriceTest {
         .datePrices(List.of(datePrice1, datePrice2))
         .build();
 
-    PriceAndDiscount avgPrice = roomPrice.getTotalPrice(List.of(date1, date2, date3));
+    PriceAndDiscount avgPrice = roomPrice.getTotalPrice(date1, date3);
 
-    assertThat(avgPrice.getPrice()).isEqualTo(50_000L + 60_000L + 80_000L);
+    assertThat(avgPrice.getPrice()).isEqualTo(50_000L + 60_000L);
     assertThat(avgPrice.getDiscountAmount()).isEqualTo(40_000L + 40_000L);
+  }
+
+  @Test
+  void priceDateTest() {
+    var priceWeekDays = createPriceWeekDay(100_000L, 0L, 80_000L);
+    var date= LocalDate.parse("2024-07-01", formatter);
+    var roomPrice = RoomPrice.builder()
+        .weekPrices(priceWeekDays)
+        .datePrices(List.of())
+        .build();
+
   }
 
   private List<WeekdayPrice> createPriceWeekDay(long price, long discountAmt, long customAmt) {

@@ -64,7 +64,8 @@ public class RoomPrice {
     return weekdayPrice.calPrice();
   }
 
-  public PriceAndDiscount getTotalPrice(List<LocalDate> dates) {
+  public PriceAndDiscount getTotalPrice(LocalDate start, LocalDate end) {
+    List<LocalDate> dates = start.datesUntil(end).toList();
     long[] sums = dates.stream()
         .map(date -> getCurrentPriceAndDiscount(date, false))
         .collect(() -> new long[2],

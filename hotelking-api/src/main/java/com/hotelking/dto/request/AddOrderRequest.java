@@ -35,7 +35,7 @@ public class AddOrderRequest implements RequestDtoCheckable {
   }
 
   private void daesilValidationCheck() {
-    if (reservationType == ReservationType.DAESIL && !isSameDay(checkIn, checkOut)) {
+    if (reservationType == ReservationType.RENT && !isSameDay(checkIn, checkOut)) {
       throw new HotelkingException(ErrorCode.REQ_ORDER_DAESIL, null);
     }
   }

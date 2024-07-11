@@ -9,3 +9,9 @@
 # -- 서비스 별 필수 약관
 # INSERT INTO SERVICE_REQUIRED_TERM(ID, SERVICE_NAME, AGREEMENT_NAME, AGREEMENT_VERSION, CREATED_AT, UPDATED_AT) VALUES (1, 'SIGNUP', 'TERMS_OF_SERVICE', '1', NOW(), NOW());
 # INSERT INTO SERVICE_REQUIRED_TERM(ID, SERVICE_NAME, AGREEMENT_NAME, AGREEMENT_VERSION, CREATED_AT, UPDATED_AT) VALUES (2, 'SIGNUP', 'PRIVACY_POLICY', '1', NOW(), NOW());
+
+# 몇월며칠 배포 이력, 현재 테이블의 형상을 볼 수 있도록 해야한다.
+# production 형상을 파일이라고도 남겨야한다. !
+# 서로 다른 사람이 서로 다른 테이블 추가 ?
+# 기능에 필요한 테이블 변경사항의 경우
+#

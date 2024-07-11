@@ -3,6 +3,7 @@ package com.hotelking.domain.hotel;
 import com.hotelking.domain.BaseTimeEntity;
 import com.hotelking.domain.price.RoomPriceType;
 import com.hotelking.domain.room.Room;
+import com.hotelking.domain.schedule.ReservationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -51,14 +52,42 @@ public class RoomType extends BaseTimeEntity {
   @OneToMany(mappedBy = "roomType", fetch = FetchType.LAZY)
   private List<RoomPriceType> roomPrices;
 
+  @Column(name = "min_person")
+  private int min;
+
+  @Column(name = "max_person")
+  private int max;
+
+  @Column(name = "hours")
+  private int hours;
+
   @Builder
-  public RoomType(String name, String content, LocalTime checkInTime, LocalTime checkOutTime,
-      long hotelId, List<Room> rooms) {
+  public RoomType(
+      String name,
+      String content,
+      LocalTime checkInTime,
+      LocalTime checkOutTime,
+      long hotelId,
+      List<Room> rooms,
+      int min,
+      int max,
+      int hours
+  ) {
     this.name = name;
     this.content = content;
     this.checkInTime = checkInTime;
     this.checkOutTime = checkOutTime;
     this.hotelId = hotelId;
     this.rooms = rooms;
+    this.min = min;
+    this.max = max;
+    this.hours = hours;
+  }
+
+  public RoomPriceType getTypePrice(ReservationType reservationType) {
+    return this.getRoomPrices().stream()
+        .filter(it -> it.getType() == reservationType)
+        .findFirst()
+        .orElse(null);
   }
 }
