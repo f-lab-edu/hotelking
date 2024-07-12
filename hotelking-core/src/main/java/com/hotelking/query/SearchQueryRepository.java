@@ -11,6 +11,9 @@ import static com.querydsl.jpa.JPAExpressions.select;
 
 import com.hotelking.domain.hotel.RoomType;
 import com.hotelking.domain.schedule.ReservationType;
+import com.hotelking.query.condition.SearchRoomParameter;
+import com.hotelking.query.projections.RoomWithPriceResult;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.Duration;
@@ -50,6 +53,40 @@ public class SearchQueryRepository {
                         roomSchedule.isReserved.isFalse())
                     .groupBy(room)
                     .having(roomSchedule.id.countDistinct().eq(getDaysBetween(startDate, endDate)))
+            ))
+        .fetch();
+  }
+
+  public List<RoomWithPriceResult> findRemainRoomNamesAndPrice(
+      SearchRoomParameter searchRoomParameter
+  ) {
+    return query.select(Projections.constructor(
+            RoomWithPriceResult.class,
+            roomType.id.as("roomId"),
+            roomType.name.as("roomName"),
+            roomPriceType.roomPrice.as("roomPrice")
+        ))
+        .from(roomPriceType)
+        .join(roomPriceType.roomType, roomType)
+        .where(
+            roomPriceType.type.eq(searchRoomParameter.type()),
+            roomType.id.in(
+                select(roomType.id)
+                    .from(roomSchedule)
+                    .join(roomSchedule.room, room)
+                    .join(room.type, roomType)
+                    .where(
+                        roomSchedule.hotel.id.eq(searchRoomParameter.hotelId()),
+                        roomSchedule.checkIn.between(
+                            searchRoomParameter.checkIn(),
+                            searchRoomParameter.checkOut().minusDays(1L)
+                        ),
+                        eqReservationType(searchRoomParameter.type()),
+                        roomSchedule.isReserved.isFalse())
+                    .groupBy(room)
+                    .having(roomSchedule.id.countDistinct().eq(
+                        getDaysBetween(searchRoomParameter.checkIn(), searchRoomParameter.checkOut()))
+                    )
             ))
         .fetch();
   }

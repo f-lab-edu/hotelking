@@ -1,7 +1,6 @@
 package com.hotelking.dto.search.model;
 
-import com.hotelking.domain.hotel.RoomType;
-import com.hotelking.domain.schedule.ReservationType;
+import com.hotelking.query.projections.RoomWithPriceResult;
 import java.time.LocalDate;
 import lombok.Builder;
 
@@ -9,22 +8,17 @@ import lombok.Builder;
 public record RoomNameWithPrice(
     long roomId,
     String roomName,
-    RoomPrice roomPrice
+    RoomPriceDto roomPrice
 ) {
-
   public static RoomNameWithPrice from(
-      RoomType roomType,
-      ReservationType reservationType,
+      RoomWithPriceResult roomWithPriceResult,
       LocalDate checkIn,
-       LocalDate checkOut
+      LocalDate checkOut
   ) {
     return RoomNameWithPrice.builder()
-        .roomId(roomType.getId())
-        .roomName(roomType.getName())
-        .roomPrice(
-            RoomPrice.from(roomType.getTypePrice(reservationType),
-                checkIn,
-                checkOut))
+        .roomId(roomWithPriceResult.roomId())
+        .roomName(roomWithPriceResult.roomName())
+        .roomPrice(RoomPriceDto.from(roomWithPriceResult.roomPrice(), checkIn, checkOut))
         .build();
   }
 }

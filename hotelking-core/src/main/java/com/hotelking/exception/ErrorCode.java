@@ -76,7 +76,9 @@ public enum ErrorCode {
   // search
   SEARCH_HOTEL_ID("S001", "호텔 번호는 필수입니다.", "호텔 정보(hotelId)는 필수", HttpStatus.BAD_REQUEST),
   SEARCH_CHECK_IN("S002", "체크인 날짜정보는 필수 입력 조건입니다.", "체크인 날짜는 Null 일 수 없음", HttpStatus.BAD_REQUEST),
-  SEARCH_DATE_FORMAT("S003", "날짜 포맷이 올바르지 않습니다.(yyyy-MM-dd)", "올바른 날짜 포맷 필수(yyyy-MM-dd)", HttpStatus.BAD_REQUEST);
+  SEARCH_DATE_FORMAT("S003", "날짜 포맷이 올바르지 않습니다.(yyyy-MM-dd)", "올바른 날짜 포맷 필수(yyyy-MM-dd)", HttpStatus.BAD_REQUEST),
+  SEARCH_DATE_ORDER("S004", "체크인, 체크아웃 순서 에러", "올바른 체크인, 체크아웃 날짜 순서 입력 필수", HttpStatus.BAD_REQUEST),
+  SEARCH_TYPE_REQUIRED("S005", "검색 타입 에러", "검색 타입 입력 필수", HttpStatus.BAD_REQUEST);
 
   private final String code;
   private final String externalErrorMessage;

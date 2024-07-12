@@ -3,7 +3,7 @@ package com.hotelking.application;
 import com.hotelking.domain.hotel.RoomType;
 import com.hotelking.domain.schedule.ReservationType;
 import com.hotelking.dto.response.RoomPricesResponse;
-import com.hotelking.dto.search.SearchRoomParameter;
+import com.hotelking.query.condition.SearchRoomParameter;
 import com.hotelking.dto.search.model.RoomNameWithPrice;
 import com.hotelking.dto.search.model.RoomTypeInfoSummary;
 import com.hotelking.query.RoomTypeRepository;
@@ -31,17 +31,8 @@ public class SearchRoomService {
   @Transactional(readOnly = true)
   public RoomPricesResponse findRemainRooms(SearchRoomParameter searchRoomParameter) {
     List<RoomType> roomCategories = findAllRoomTypes(searchRoomParameter.hotelId());
-    List<RoomNameWithPrice> stayNameAndPrices = fetchRoomPrices(
-        searchRoomParameter,
-        ReservationType.STAY,
-        this::shouldIncludeStayPrice
-    );
-
-    List<RoomNameWithPrice> rentNameAndPrices = fetchRoomPrices(
-        searchRoomParameter,
-        ReservationType.RENT,
-        this::shouldIncludeRentPrice
-    );
+    List<RoomNameWithPrice> stayNameAndPrices = fetchRoomPrices(searchRoomParameter, this::shouldIncludeStayPrice);
+    List<RoomNameWithPrice> rentNameAndPrices = fetchRoomPrices(searchRoomParameter, this::shouldIncludeRentPrice);
     return RoomPricesResponse.builder()
         .rooms(roomCategories.stream()
             .map(RoomTypeInfoSummary::from)
@@ -57,32 +48,26 @@ public class SearchRoomService {
 
   private List<RoomNameWithPrice> fetchRoomPrices(
       SearchRoomParameter searchRoomParameter,
-      ReservationType reservationType,
       Predicate<SearchRoomParameter> includePriceCondition
   ) {
     if (includePriceCondition.test(searchRoomParameter)) {
-      return searchQueryRepository.findRemainRooms(
-              searchRoomParameter.hotelId(),
-              searchRoomParameter.checkIn(),
-              searchRoomParameter.checkOut(),
-              reservationType)
+      return searchQueryRepository.findRemainRoomNamesAndPrice(searchRoomParameter)
           .stream()
-          .map(room -> RoomNameWithPrice.from(
-              room,
-              reservationType,
+          .map(roomWithPriceResult -> RoomNameWithPrice.from(
+              roomWithPriceResult,
               searchRoomParameter.checkIn(),
-              searchRoomParameter.checkOut()
-          ))
+              searchRoomParameter.checkOut())
+          )
           .toList();
     }
     return new ArrayList<>();
   }
 
   private boolean shouldIncludeStayPrice(SearchRoomParameter searchRoomParameter) {
-    return searchRoomParameter.reservationType() == null || searchRoomParameter.reservationType() == ReservationType.BOTH || searchRoomParameter.reservationType() == ReservationType.STAY;
+    return searchRoomParameter.type() == null || searchRoomParameter.type() == ReservationType.BOTH || searchRoomParameter.type() == ReservationType.STAY;
   }
 
   private boolean shouldIncludeRentPrice(SearchRoomParameter searchRoomParameter) {
-    return searchRoomParameter.reservationType() == null || searchRoomParameter.reservationType() == ReservationType.BOTH || searchRoomParameter.reservationType() == ReservationType.RENT;
+    return searchRoomParameter.type() == null || searchRoomParameter.type() == ReservationType.BOTH || searchRoomParameter.type() == ReservationType.RENT;
   }
 }

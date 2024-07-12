@@ -10,4 +10,8 @@ public record ErrorContent(String code, String message) {
     return new ErrorContent(errorCode.getCode(), errorCode.getExternalErrorMessage());
   }
 
+  public static ErrorContent createOnlyMessage(String message) {
+    return new ErrorContent(null, message);
+  }
+
 }
