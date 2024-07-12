@@ -9,7 +9,7 @@ import com.hotelking.dto.AddRoomReservationDto;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
 import com.hotelking.query.RoomScheduleRepository;
-import com.hotelking.query.RoomTypeQueryRepository;
+import com.hotelking.query.RoomTypeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +20,16 @@ public class RoomReservationService {
 
   private final RoomReservationRepository roomReservationRepository;
   private final RoomScheduleRepository roomScheduleQuery;
-  private final RoomTypeQueryRepository roomTypeQueryRepository;
+  private final RoomTypeRepository roomTypeRepository;
 
-  public RoomReservationService(RoomReservationRepository roomReservationRepository, RoomScheduleRepository roomScheduleQuery,
-      RoomTypeQueryRepository roomTypeQueryRepository) {
+  public RoomReservationService(
+      RoomReservationRepository roomReservationRepository,
+      RoomScheduleRepository roomScheduleQuery,
+      RoomTypeRepository roomTypeRepository
+  ) {
     this.roomReservationRepository = roomReservationRepository;
     this.roomScheduleQuery = roomScheduleQuery;
-    this.roomTypeQueryRepository = roomTypeQueryRepository;
+    this.roomTypeRepository = roomTypeRepository;
   }
 
   @Transactional
@@ -38,7 +41,7 @@ public class RoomReservationService {
   }
 
   private RoomType findRoomType(AddRoomReservationDto addRoomReservationDto) {
-    return roomTypeQueryRepository.findById(addRoomReservationDto.roomTypeId())
+    return roomTypeRepository.findById(addRoomReservationDto.roomTypeId())
         .orElseThrow(() -> new HotelkingException(ErrorCode.NOT_FOUND_ROOM_TYPE, log));
   }
 
@@ -83,7 +86,7 @@ public class RoomReservationService {
   }
 
   private boolean isDaeSilReservation(AddRoomReservationDto addRoomReservationDto) {
-    return addRoomReservationDto.reservationType() == ReservationType.DAESIL;
+    return addRoomReservationDto.reservationType() == ReservationType.RENT;
   }
 
   private long countEmptyDaeSilScheduleRooms(AddRoomReservationDto addRoomReservationDto) {

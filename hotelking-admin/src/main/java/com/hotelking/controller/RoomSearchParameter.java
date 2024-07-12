@@ -3,7 +3,7 @@ package com.hotelking.controller;
 
 import com.hotelking.domain.schedule.ReservationType;
 import com.hotelking.dto.query.RoomAllocationType;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.Builder;
 
@@ -11,8 +11,8 @@ import lombok.Builder;
 public record RoomSearchParameter(
     RoomAllocationType allocationType,
     List<Long> types,
-    LocalDateTime checkInDate,
-    LocalDateTime checkOutDate,
+    LocalDate checkInDate,
+    LocalDate checkOutDate,
     ReservationType reservationType,
     boolean reserved
 ) {

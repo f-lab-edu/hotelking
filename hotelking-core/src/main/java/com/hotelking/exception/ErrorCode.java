@@ -54,7 +54,31 @@ public enum ErrorCode {
   AUTH_JWT_DELETE_USER("AU002", "잘못된 요청입니다.", "탈퇴 혹은 존재하지 않은 유저의 토큰으로 요청 시도", HttpStatus.BAD_REQUEST),
 
   NOT_READABLE("C001", "잘못된 요청값입니다.", "잘못된 요청값입니다.",  HttpStatus.BAD_REQUEST),
-  NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR);
+  NOT_DEFINED("X001", "", "", HttpStatus.INTERNAL_SERVER_ERROR),
+
+  // price
+  PRICE_MIN("P001", "기본 룸 가격은 1만원 이상 설정 해야합니다.", "가격은 1만원 이상 설정해야한다.", HttpStatus.BAD_REQUEST),
+  PRICE_DISCOUNT_MIN("P002", "기본 할인 가격은 최소 1000원 이상 이어야 합니다.", "최소 할인 금액(1000) 이상 필수", HttpStatus.BAD_REQUEST),
+  PRICE_TOTAL_MIN("P003", "룸 가격 - 할인 금액은 최소 1000원 이상이어야 합니다.", "최종 룸 가격은 1000원 이상 필수", HttpStatus.BAD_REQUEST),
+  PRICE_BASE_MONEY_REQUIRED("P004", "룸 기준 가격은 필수 입력 조건입니다.", "룸 기준 가격은 Null 일 수 없음", HttpStatus.BAD_REQUEST),
+  PRICE_BUILD_ROOM_TYPE("P005", "룸 가격 등록 시 룸 타입에 대한 정보는 필수입니다.", "RoomType 은 Null 일 수 없음", HttpStatus.BAD_REQUEST),
+  PRICE_NOT_NULL("P006", "룸 가격 설정 시 가격은 필수 입력 조건입니다.", "MoneyAndDiscount 의 price Money 는 Null 일 수 없음", HttpStatus.BAD_REQUEST),
+  PRICE_DISCOUNT_NOT_NEGATIVE("P007", "잘못된 룸 할인 금액입니다.", "RoomDiscount 금액이 마이너스(-) 일 수 없음", HttpStatus.BAD_REQUEST),
+  PRICE_DEFAULT_REQUIRED("P008", "기본 가격은 필수 입력 조건입니다.", "defaultPrice 는 필수", HttpStatus.BAD_REQUEST),
+  PRICE_CUSTOM_KEY_ERROR("P009", "커스텀 가격 에러 발생", "customPrice key 는 yyyy-MM-dd 포맷 필수", HttpStatus.BAD_REQUEST),
+  PRICE_DAY_NOT_NULL("P010", "가격 적용 요일은 필수 입력 조건입니다.", "RoomPriceWeekType 의 day 는 Null 일 수 없음", HttpStatus.BAD_REQUEST),
+  PRICE_PRICES_REQUIRED("P011", "각 요일의 가격 정보는 필수 입력 조건입니다.", "각 요일 당 최소 하나의 RoomPriceElement 는 필수", HttpStatus.BAD_REQUEST),
+  PRICE_CUSTOM_DEFAULT_REQUIRED("P012", "커스텀 가격의 경우 기본 가격정보는 필수 입력 조건입니다.", "CustomPrice.defaultPrice 는 필수", HttpStatus.BAD_REQUEST),
+  PRICE_WEEKS_OF_DAY_REQUIRED("P013", "룸 타입 가격설정 시 요일 정보는 필수 입력 조건입니다.", "RoomPriceWeekday 는 필수", HttpStatus.BAD_REQUEST),
+  PRICE_ALL_DAY_REQUIRED("P014", "룸 타입 가격 설정시 모든 요일 정보(월 ~ 일, 공휴일)는 필수 입력 조건입니다.", "RoomPriceWeekType 에 있는 모든 요일 정보 필수", HttpStatus.BAD_REQUEST),
+  PRICE_ROOM_TYPE_PRICE_NOT_NULL("P015", "룸 타입과 가격정보는 필수 입력 조건 입니다.", "RoomType, RoomPrice 는 필수", HttpStatus.BAD_REQUEST),
+
+  // search
+  SEARCH_HOTEL_ID("S001", "호텔 번호는 필수입니다.", "호텔 정보(hotelId)는 필수", HttpStatus.BAD_REQUEST),
+  SEARCH_CHECK_IN("S002", "체크인 날짜정보는 필수 입력 조건입니다.", "체크인 날짜는 Null 일 수 없음", HttpStatus.BAD_REQUEST),
+  SEARCH_DATE_FORMAT("S003", "날짜 포맷이 올바르지 않습니다.(yyyy-MM-dd)", "올바른 날짜 포맷 필수(yyyy-MM-dd)", HttpStatus.BAD_REQUEST),
+  SEARCH_DATE_ORDER("S004", "체크인, 체크아웃 순서 에러", "올바른 체크인, 체크아웃 날짜 순서 입력 필수", HttpStatus.BAD_REQUEST),
+  SEARCH_TYPE_REQUIRED("S005", "검색 타입 에러", "검색 타입 입력 필수", HttpStatus.BAD_REQUEST);
 
   private final String code;
   private final String externalErrorMessage;

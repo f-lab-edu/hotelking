@@ -18,7 +18,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
 
@@ -33,7 +33,7 @@ public class RoomSchedule extends BaseTimeEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(
-                              columnDefinition = "BIGINT",
+      columnDefinition = "BIGINT",
       nullable = false,
       updatable = false,
       foreignKey = @ForeignKey(name = "fk_room_schedule_to_room")
@@ -50,9 +50,9 @@ public class RoomSchedule extends BaseTimeEntity {
   )
   private Hotel hotel;
 
-  @Column(name = "check_in", columnDefinition = "TIMESTAMP(0)", nullable = false)
-  @Temporal(TemporalType.TIMESTAMP)
-  private LocalDateTime checkIn;
+  @Column(name = "check_in", nullable = false)
+  @Temporal(TemporalType.DATE)
+  private LocalDate checkIn;
 
   @OneToMany(mappedBy = "roomSchedule", fetch = FetchType.LAZY)
   private List<RoomScheduleTimeSlot> roomScheduleTimeSlots;

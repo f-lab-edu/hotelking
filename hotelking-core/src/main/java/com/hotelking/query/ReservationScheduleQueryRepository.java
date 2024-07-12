@@ -9,6 +9,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -24,8 +25,8 @@ public class ReservationScheduleQueryRepository {
 
   public List<RoomSchedule> findSchedulesByRoomIdAndDateRange(
       long roomId,
-      LocalDateTime checkIn,
-      LocalDateTime checkOut,
+      LocalDate checkIn,
+      LocalDate checkOut,
       ReservationType reservationType
   ) {
     QRoomSchedule roomSchedule2 = roomSchedule;
@@ -45,7 +46,7 @@ public class ReservationScheduleQueryRepository {
                         roomSchedule2.isReserved.eq(false)
                     )
                     .groupBy(roomSchedule2.room.id)
-                    .having(roomSchedule2.checkIn.countDistinct().eq(getDaysBetween(checkIn, checkOut) + 1))
+                    .having(roomSchedule2.checkIn.countDistinct().eq(getDaysBetween(checkIn.atStartOfDay(), checkOut.atStartOfDay()) + 1))
             )
         )
         .fetch();
@@ -53,8 +54,8 @@ public class ReservationScheduleQueryRepository {
 
   private BooleanExpression eqReservationType(ReservationType reservationType, QRoomSchedule roomSchedule) {
     BooleanExpression bothType = roomSchedule.reservationType.eq(ReservationType.BOTH);
-    if (reservationType.equals(ReservationType.DAESIL)) {
-      return bothType.or(roomSchedule.reservationType.eq(ReservationType.DAESIL));
+    if (reservationType.equals(ReservationType.RENT)) {
+      return bothType.or(roomSchedule.reservationType.eq(ReservationType.RENT));
     }
     return bothType.or(roomSchedule.reservationType.eq(ReservationType.STAY));
   }
@@ -63,7 +64,7 @@ public class ReservationScheduleQueryRepository {
     return Duration.between(checkIn, checkOut).toDays();
   }
 
-  private BooleanExpression rangeBetween(LocalDateTime checkIn, LocalDateTime checkOut) {
+  private BooleanExpression rangeBetween(LocalDate checkIn, LocalDate checkOut) {
     return roomSchedule.checkIn.between(checkIn, checkOut);
   }
 

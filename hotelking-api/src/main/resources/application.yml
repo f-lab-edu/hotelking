@@ -16,7 +16,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate # ddl-auto 공부 ! , validate option 공부 ! error!
     show-sql: true
 
     properties:
@@ -33,3 +33,12 @@ jwt:
   secret-key: aG90ZWxraW5naGVsbG8K
   access-life-time-sec: 86400      # 1일
   refresh-life-time-sec: 15552000  # 6개월 (86400 * 30 * 6(개월))
+
+logging:
+  level:
+    org:
+      hibernate:
+        resource:
+          jdbc:
+            internal:
+              ResourceRegistryStandardImpl: trace
