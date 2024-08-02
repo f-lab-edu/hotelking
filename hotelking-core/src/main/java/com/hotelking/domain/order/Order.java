@@ -1,10 +1,12 @@
 package com.hotelking.domain.order;
 
+import com.hotelking.domain.schedule.ReservationType;
 import com.hotelking.dto.AppUser;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.time.LocalDateTime;
 import java.util.UUID;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
@@ -21,25 +23,30 @@ public class Order implements Serializable {
   private LocalDate checkOut;
   private Long hotelId;
   private Long roomTypeId;
-  private Integer amount;
   private AppUser appUser;
+  private ReservationType reservationType;
+  private LocalDateTime createdAt;
 
+  @Builder
   public Order(
       UUID id,
       LocalDate checkIn,
       LocalDate checkOut,
       Long hotelId,
       Long roomTypeId,
-      Integer amount,
-      AppUser appUser
+      AppUser appUser,
+      ReservationType reservationType
   ) {
-    this.id = id;
+    if (this.id == null) {
+      this.id = id;
+    }
     this.checkIn = checkIn;
     this.checkOut = checkOut;
     this.hotelId = hotelId;
     this.roomTypeId = roomTypeId;
-    this.amount = amount;
     this.appUser = appUser;
+    this.reservationType = reservationType;
+    this.createdAt = LocalDateTime.now();
   }
 
   @Override
@@ -51,11 +58,11 @@ public class Order implements Serializable {
       return false;
     }
 
-    return Objects.equals(id, order.id);
+    return id.equals(order.id);
   }
 
   @Override
   public int hashCode() {
-    return id != null ? id.hashCode() : 0;
+    return id.hashCode();
   }
 }
