@@ -21,7 +21,7 @@ public class RoomReservationController {
   }
 
   @PostMapping("/order")
-  public ApiResponse<?> createOrder(
+  public ApiResponse<OrderResponse> createOrder(
       @Login AppUser appUser,
       @RequestBody AddOrderRequest addOrderRequest
   ) {
