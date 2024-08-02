@@ -1,18 +1,18 @@
 package com.hotelking.application;
 
-import com.hotelking.domain.hotel.RoomType;
-import com.hotelking.domain.reservation.RoomReservation;
+import com.hotelking.domain.order.Order;
+import com.hotelking.domain.order.OrderRepository;
 import com.hotelking.domain.reservation.RoomReservationRepository;
 import com.hotelking.domain.schedule.ReservationType;
-import com.hotelking.dto.AppUser;
 import com.hotelking.dto.AddRoomReservationDto;
+import com.hotelking.dto.AppUser;
 import com.hotelking.exception.ErrorCode;
 import com.hotelking.exception.HotelkingException;
 import com.hotelking.query.RoomScheduleRepository;
 import com.hotelking.query.RoomTypeQueryRepository;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -21,25 +21,20 @@ public class RoomReservationService {
   private final RoomReservationRepository roomReservationRepository;
   private final RoomScheduleRepository roomScheduleQuery;
   private final RoomTypeQueryRepository roomTypeQueryRepository;
+  private final OrderRepository orderRepository;
 
   public RoomReservationService(RoomReservationRepository roomReservationRepository, RoomScheduleRepository roomScheduleQuery,
-      RoomTypeQueryRepository roomTypeQueryRepository) {
+      RoomTypeQueryRepository roomTypeQueryRepository, OrderRepository orderRepository) {
     this.roomReservationRepository = roomReservationRepository;
     this.roomScheduleQuery = roomScheduleQuery;
     this.roomTypeQueryRepository = roomTypeQueryRepository;
+    this.orderRepository = orderRepository;
   }
 
-  @Transactional
-  public void addOrder(AppUser appUser, AddRoomReservationDto addRoomReservationDto) {
+  public UUID addOrder(AppUser appUser, AddRoomReservationDto addRoomReservationDto) {
     checkRoomRevAvailability(addRoomReservationDto);
-    final RoomType roomType = findRoomType(addRoomReservationDto);
-    RoomReservation roomReservation = addRoomReservationDto.toRoomRevWithType(appUser, roomType);
-    roomReservationRepository.save(roomReservation);
-  }
-
-  private RoomType findRoomType(AddRoomReservationDto addRoomReservationDto) {
-    return roomTypeQueryRepository.findById(addRoomReservationDto.roomTypeId())
-        .orElseThrow(() -> new HotelkingException(ErrorCode.NOT_FOUND_ROOM_TYPE, log));
+    Order savedOrder = orderRepository.save(addRoomReservationDto.toOrder(appUser));
+    return savedOrder.getId();
   }
 
   public void checkRoomRevAvailability(AddRoomReservationDto addRoomReservationDto) {

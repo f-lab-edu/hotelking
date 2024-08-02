@@ -1,6 +1,7 @@
 package com.hotelking.dto;
 
 import com.hotelking.domain.hotel.RoomType;
+import com.hotelking.domain.order.Order;
 import com.hotelking.domain.reservation.RoomReservation;
 import com.hotelking.domain.schedule.ReservationType;
 import java.time.LocalDateTime;
@@ -16,6 +17,17 @@ public record AddRoomReservationDto(
 
   public long getDayDiffer() {
     return ChronoUnit.DAYS.between(checkIn, checkOut);
+  }
+
+  public Order toOrder(AppUser appUser) {
+    return Order.builder()
+        .hotelId(hotelId)
+        .roomTypeId(roomTypeId)
+        .checkIn(checkIn.toLocalDate())
+        .checkOut(checkOut.toLocalDate())
+        .appUser(appUser)
+        .reservationType(reservationType)
+        .build();
   }
 
   public RoomReservation toRoomRevWithType(AppUser user, RoomType roomType) {
