@@ -26,6 +26,9 @@ public class WebConfig implements WebMvcConfigurer {
             // user
             "/find-user-id",
 
+            // reservation
+            "/order",
+
             // phone auth
             "/phone-verification",
             "/phone-confirm"
