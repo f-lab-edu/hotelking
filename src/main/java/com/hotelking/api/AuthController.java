@@ -2,8 +2,8 @@ package com.hotelking.api;
 
 import com.hotelking.api.common.ApiResponse;
 import com.hotelking.api.dto.PhoneAuthToken;
-import com.hotelking.api.request.PhoneAuthCodeRequest;
-import com.hotelking.api.request.PhoneAuthConfirmRequest;
+import com.hotelking.api.dto.request.PhoneAuthCodeRequest;
+import com.hotelking.api.dto.request.PhoneAuthConfirmRequest;
 import com.hotelking.domain.member.service.AuthService;
 import com.hotelking.domain.member.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;

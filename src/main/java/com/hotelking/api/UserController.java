@@ -1,12 +1,12 @@
 package com.hotelking.api;
 
 import com.hotelking.api.common.ApiResponse;
-import com.hotelking.api.request.AccessTokenIssueRequest;
-import com.hotelking.api.request.AddUserRequest;
-import com.hotelking.api.request.LoginRequest;
-import com.hotelking.api.request.PhoneAuthConfirmRequest;
-import com.hotelking.api.response.JwtTokenResponse;
-import com.hotelking.api.response.UserIdResponse;
+import com.hotelking.api.dto.request.AccessTokenIssueRequest;
+import com.hotelking.api.dto.request.AddUserRequest;
+import com.hotelking.api.dto.request.LoginRequest;
+import com.hotelking.api.dto.request.PhoneAuthConfirmRequest;
+import com.hotelking.api.dto.response.JwtTokenResponse;
+import com.hotelking.api.dto.response.UserIdResponse;
 import com.hotelking.domain.member.service.AuthService;
 import com.hotelking.domain.member.service.LoginService;
 import com.hotelking.domain.member.service.UserService;

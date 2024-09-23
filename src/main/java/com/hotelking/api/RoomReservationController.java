@@ -1,8 +1,8 @@
 package com.hotelking.api;
 
 import com.hotelking.api.common.ApiResponse;
-import com.hotelking.api.request.AddOrderRequest;
-import com.hotelking.api.request.OrderResponse;
+import com.hotelking.api.dto.request.AddOrderRequest;
+import com.hotelking.api.dto.request.OrderResponse;
 import com.hotelking.domain.booking.service.RoomReservationService;
 import com.hotelking.domain.common.AppUser;
 import com.hotelking.global.resolver.Login;

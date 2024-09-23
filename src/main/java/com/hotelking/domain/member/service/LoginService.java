@@ -1,7 +1,7 @@
 package com.hotelking.domain.member.service;
 
 import com.hotelking.api.dto.LoginRequestDto;
-import com.hotelking.api.response.JwtTokenResponse;
+import com.hotelking.api.dto.response.JwtTokenResponse;
 import com.hotelking.domain.member.User;
 import com.hotelking.domain.member.UserRepository;
 import com.hotelking.global.exception.ErrorCode;
