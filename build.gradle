@@ -1,59 +1,79 @@
-// Gradle 의 빌드 가장 일반적인 Build Script Block 중 하나
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.5'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '3.3.3'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
-// sub-projects 들 각각 그리고 root 프로젝트를 구성할 때 사용하는 블럭
-allprojects {
-    repositories {
-        mavenCentral()
-    }
-}
+group = 'org.example'
+version = '0.0.1-SNAPSHOT'
 
-// 개별 sub-project 에 적용되는 블럭
-subprojects {
-
-    apply {
-        plugin 'java'
-        plugin 'io.spring.dependency-management'
-        plugin 'org.springframework.boot'
-    }
-
-    sourceCompatibility = '17'
-
-    configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
-    }
-
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter'
-        compileOnly 'org.projectlombok:lombok'
-        runtimeOnly 'com.h2database:h2'
-        annotationProcessor 'org.projectlombok:lombok'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    }
-
-    bootJar{
-        enabled = true
-    }
-
-    jar{
-        enabled = true
-    }
-
-    tasks.named('test') {
-        useJUnitPlatform()
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
-bootJar {
-    enabled = false
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // openapi & swagger ui
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+
+    // web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // password encoder encrypt implement
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.78'
+
+    // for validation null check
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+    // encrypt
+    implementation 'org.springframework.security:spring-security-crypto'
+
+    // data
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    implementation 'org.springframework.data:spring-data-redis'
+    implementation 'io.lettuce:lettuce-core:6.3.1.RELEASE'
+
+    // query dsl
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    // jwt
+    implementation 'com.auth0:java-jwt:4.4.0'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor "org.projectlombok:lombok"
+
+    // redis for jwt
+    implementation 'org.springframework.data:spring-data-redis'
+    implementation 'io.lettuce:lettuce-core:6.3.1.RELEASE'
+    implementation ('it.ozimov:embedded-redis:0.7.3') { exclude group: "org.slf4j", module: "slf4j-simple" }
+
+    // docker compose support
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+    // mysql driver
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }
